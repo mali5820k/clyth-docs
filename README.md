@@ -1,12 +1,11 @@
-# clyth-docs
-Clyth programming language documentation website
+# Clyth Docs Starter
 
+A starter GitHub Pages template for the Clyth documentation site.
 
+Recommended GitHub Pages settings:
 
-## License
+- Source: Deploy from branch
+- Branch: `main`
+- Folder: `/root`
 
-Copyright © 2026 Muhammad Ali
-
-The Clyth documentation is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
-
-Code examples are licensed under the MIT License unless otherwise specified.
+The documentation content is licensed under CC BY 4.0. Code examples are MIT unless otherwise specified.

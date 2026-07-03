@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clyth Documentation</title>
+  <meta name="description" content="Documentation for Clyth, an LLVM-based systems programming language.">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="./">
+        <span class="brand-mark">C</span>
+        <span>Clyth</span>
+      </a>
+      <div class="nav-links">
+        <a href="docs/getting-started/">Getting Started</a>
+        <a href="docs/language/">Language</a>
+        <a href="docs/runtime/">Runtime</a>
+        <a href="docs/modules/">Modules</a>
+        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Clyth 0.4.0-alpha</p>
+        <h1>An LLVM-based systems programming language with a runtime-first architecture.</h1>
+        <p class="lead">
+          Clyth explores explicit control, predictable execution, and a smaller compiler boundary.
+          The compiler understands the language; the runtime ecosystem provides capabilities.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="docs/getting-started/">Start Reading</a>
+          <a class="button secondary" href="https://github.com/mali5820k/Cobralyth/releases/tag/v0.4.0">View Release</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="code-window">
+          <div class="window-bar">
+            <span></span><span></span><span></span>
+          </div>
+<pre><code>include "collections"
+
+func main() -> int32 {
+    List&lt;int32&gt; numbers = List([1, 2, 3])
+
+    numbers.push(4)
+
+    return numbers.get(0)
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles">
+      <article>
+        <h2>Smaller Compiler</h2>
+        <p>The compiler focuses on syntax, semantics, generic lowering, and LLVM IR generation.</p>
+      </article>
+      <article>
+        <h2>Richer Runtime</h2>
+        <p>Collections, hashing, file I/O, networking, and JSON belong in ordinary Clyth modules.</p>
+      </article>
+      <article>
+        <h2>C ABI Boundary</h2>
+        <p>Official native bindings target C and musl-friendly portability rather than C++ runtime dependencies.</p>
+      </article>
+    </section>
+
+    <section class="docs-grid">
+      <h2>Documentation</h2>
+      <div class="grid">
+        <a class="doc-card" href="docs/getting-started/">
+          <h3>Getting Started</h3>
+          <p>Build Clyth, run the sample suite, and compile your first program.</p>
+        </a>
+        <a class="doc-card" href="docs/language/">
+          <h3>Language Guide</h3>
+          <p>Syntax, functions, structs, generics, arrays, and modules.</p>
+        </a>
+        <a class="doc-card" href="docs/runtime/">
+          <h3>Runtime</h3>
+          <p>Collections, C ABI bindings, and future standard runtime modules.</p>
+        </a>
+        <a class="doc-card" href="docs/modules/">
+          <h3>Modules</h3>
+          <p>Package metadata, module layout, and the path toward registry-hosted tarballs.</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p>
+  </footer>
+</body>
+</html>
