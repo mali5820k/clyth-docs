@@ -1,0 +1,25 @@
+# Archives / generated release bundles
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+
+# Build output
+build/
+dist/
+out/
+
+# Native artifacts
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

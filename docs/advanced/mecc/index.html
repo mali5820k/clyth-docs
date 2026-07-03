@@ -24,6 +24,9 @@
     </nav>
   </header>
 
+  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
+  <div class="sidebar-backdrop" hidden></div>
+
   <main class="docs-shell">
     <aside class="sidebar" aria-label="Documentation navigation">
 <p class="sidebar-title">Clyth Docs</p>
@@ -106,5 +109,42 @@
   <footer class="site-footer">
     <p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p>
   </footer>
+
+  <script id="clyth-docs-drawer-script">
+    (function () {
+      const button = document.querySelector('.mobile-docs-toggle');
+      const backdrop = document.querySelector('.sidebar-backdrop');
+      const sidebar = document.querySelector('.sidebar');
+
+      if (!button || !backdrop || !sidebar) return;
+
+      function setOpen(open) {
+        document.body.classList.toggle('sidebar-open', open);
+        button.setAttribute('aria-expanded', open ? 'true' : 'false');
+        backdrop.hidden = !open;
+      }
+
+      button.addEventListener('click', function () {
+        setOpen(!document.body.classList.contains('sidebar-open'));
+      });
+
+      backdrop.addEventListener('click', function () {
+        setOpen(false);
+      });
+
+      sidebar.addEventListener('click', function (event) {
+        if (event.target.closest('a')) {
+          setOpen(false);
+        }
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          setOpen(false);
+        }
+      });
+    })();
+  </script>
+
 </body>
 </html>
