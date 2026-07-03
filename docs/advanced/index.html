@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Runtime Overview · Clyth Documentation</title>
-  <meta name="description" content="Clyth documentation: Runtime Overview">
+  <title>Advanced Language · Clyth Documentation</title>
+  <meta name="description" content="Clyth documentation: Advanced Language">
   <link rel="stylesheet" href="../../assets/css/site.css">
 </head>
 <body>
@@ -47,7 +47,7 @@
 </div>
 <div class="sidebar-group">
 <h4>Advanced Language</h4>
-<a class="" href="../../docs/advanced/">Advanced Language</a>
+<a class="active" href="../../docs/advanced/">Advanced Language</a>
 <a class="" href="../../docs/advanced/structs-this/">Structs, Constructors, Methods, and this</a>
 <a class="" href="../../docs/advanced/collections/">Runtime Collections</a>
 <a class="" href="../../docs/advanced/maps-keyed-arrays/">Maps and Keyed Arrays</a>
@@ -56,7 +56,7 @@
 </div>
 <div class="sidebar-group">
 <h4>Runtime &amp; Modules</h4>
-<a class="active" href="../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../docs/runtime/">Runtime Overview</a>
 <a class="" href="../../docs/runtime/package-includes/">Package Includes</a>
 <a class="" href="../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
 <a class="" href="../../docs/runtime/module-metadata/">Module Metadata</a>
@@ -84,25 +84,16 @@
 </div>
 </aside>
     <article class="doc-page">
-      <span class="breadcrumb">Runtime &amp; Modules</span>
-      <h1>Runtime Overview</h1>
+      <span class="breadcrumb">Advanced Language</span>
+      <h1>Advanced Language</h1>
       
-<p>Clyth runtime functionality is organized under <code>clyth-runtime/</code>.</p>
-<pre><code>clyth-runtime/
-├── c-bindings/
-│   ├── dma/
-│   ├── libwebsockets/
-│   └── openssl/
-├── modules/
-│   ├── module-collections/
-│   ├── module-dma/
-│   ├── module-json/
-│   ├── module-web/
-│   └── module-tls/
-├── runtime_libraries.json
-└── EXTERNAL_LIBRARIES_LICENSES.md</code></pre>
-<p>The <code>modules/</code> directory is the single source of truth for Clyth runtime module source and metadata. C binding source code remains under <code>c-bindings/</code>.</p>
-<p><code>runtime_libraries.json</code> is a compiler-consumed index/cache. Future <code>clyth install</code>, <code>clyth remove</code>, and <code>clyth refresh</code> commands should regenerate it from module metadata rather than expecting developers to edit it directly.</p>
+<p>This section collects the language features that make the runtime migration possible: structs, constructors, methods, generics, runtime-backed collections, and the MECC direction.</p>
+<div class="cards">
+  <a class="mini-card" href="structs-this/"><strong>Structs and this</strong><span>Constructors, methods, and member access.</span></a>
+  <a class="mini-card" href="collections/"><strong>Runtime Collections</strong><span>List and Set as runtime modules.</span></a>
+  <a class="mini-card" href="maps-keyed-arrays/"><strong>Maps and Keyed Arrays</strong><span>Map initialization through keyed-array literals.</span></a>
+  <a class="mini-card" href="mecc/"><strong>MECC</strong><span>Deterministic estate-based ownership direction.</span></a>
+</div>
 
     </article>
   </main>

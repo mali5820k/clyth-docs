@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Runtime Collections · Clyth Documentation</title>
+  <meta name="description" content="Clyth documentation: Runtime Collections">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../../../">
+        <span class="brand-mark">C</span>
+        <span>Clyth</span>
+      </a>
+      <div class="nav-links">
+        <a href="../../../docs/overview/">Docs</a>
+        <a href="../../../docs/basics/">Basics</a>
+        <a href="../../../docs/runtime/">Runtime</a>
+        <a href="../../../docs/tooling/">Tooling</a>
+        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="docs-shell">
+    <aside class="sidebar">
+<p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group">
+<h4>Overview</h4>
+<a class="" href="../../../docs/overview/">Overview</a>
+<a class="" href="../../../docs/overview/why-clyth/">Why Clyth Exists</a>
+<a class="" href="../../../docs/overview/current-status/">Current Status</a>
+<a class="" href="../../../docs/overview/design-boundary/">Design Boundary</a>
+<a class="" href="../../../docs/overview/roadmap/">Roadmap</a>
+<a class="" href="../../../docs/overview/ai-assisted-development/">AI-Assisted Development</a>
+<a class="" href="../../../docs/overview/legal-notes/">Legal Notes</a>
+</div>
+<div class="sidebar-group">
+<h4>Basics</h4>
+<a class="" href="../../../docs/basics/">Basics</a>
+<a class="" href="../../../docs/basics/hello-world/">Hello World</a>
+<a class="" href="../../../docs/basics/command-line-arguments/">Command-Line Arguments</a>
+<a class="" href="../../../docs/basics/arrays/">Arrays</a>
+<a class="" href="../../../docs/basics/strings/">Strings</a>
+</div>
+<div class="sidebar-group">
+<h4>Advanced Language</h4>
+<a class="" href="../../../docs/advanced/">Advanced Language</a>
+<a class="" href="../../../docs/advanced/structs-this/">Structs, Constructors, Methods, and this</a>
+<a class="active" href="../../../docs/advanced/collections/">Runtime Collections</a>
+<a class="" href="../../../docs/advanced/maps-keyed-arrays/">Maps and Keyed Arrays</a>
+<a class="" href="../../../docs/advanced/generic-instantiation/">Generic Runtime Instantiation</a>
+<a class="" href="../../../docs/advanced/mecc/">MECC Direction</a>
+</div>
+<div class="sidebar-group">
+<h4>Runtime &amp; Modules</h4>
+<a class="" href="../../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../../docs/runtime/package-includes/">Package Includes</a>
+<a class="" href="../../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
+<a class="" href="../../../docs/runtime/module-metadata/">Module Metadata</a>
+<a class="" href="../../../docs/runtime/dma/">DMA Runtime Module</a>
+<a class="" href="../../../docs/runtime/json-web-tls/">JSON, Web, and TLS</a>
+</div>
+<div class="sidebar-group">
+<h4>0.5 Runtime Targets</h4>
+<a class="" href="../../../docs/standard-library/">Standard Library Direction</a>
+<a class="" href="../../../docs/standard-library/file-io/">File I/O</a>
+<a class="" href="../../../docs/standard-library/networking/">Networking</a>
+<a class="" href="../../../docs/standard-library/math/">Math</a>
+<a class="" href="../../../docs/standard-library/json/">JSON</a>
+<a class="" href="../../../docs/standard-library/hash/">Hashing</a>
+</div>
+<div class="sidebar-group">
+<h4>Tooling &amp; Distribution</h4>
+<a class="" href="../../../docs/tooling/">Tooling Overview</a>
+<a class="" href="../../../docs/tooling/building/">Building</a>
+<a class="" href="../../../docs/tooling/testing/">Testing</a>
+<a class="" href="../../../docs/tooling/regression-suite/">Regression Suite</a>
+<a class="" href="../../../docs/tooling/distribution/">Distribution</a>
+<a class="" href="../../../docs/tooling/future-cli/">Future CLI</a>
+<a class="" href="../../../docs/tooling/package-safety/">Package Safety</a>
+</div>
+</aside>
+    <article class="doc-page">
+      <span class="breadcrumb">Advanced Language</span>
+      <h1>Runtime Collections</h1>
+      
+<h2>Lists</h2>
+<p><code>List&lt;T&gt;</code> is the growable runtime container layer. Capacity and growth policy belong here.</p>
+<pre><code>include &quot;collections&quot;
+
+extern C int32 printf(string fmt, ...)
+
+int32 main() {
+    List&lt;int32&gt; values = List([3, 4])
+    values.push(35)
+
+    printf(&quot;length: %d\n&quot;, values.length)
+    printf(&quot;capacity: %d\n&quot;, values.capacity)
+    printf(&quot;last: %d\n&quot;, values.get(2))
+
+    int32 popped = values.pop()
+    printf(&quot;popped: %d\n&quot;, popped)
+
+    int32 middle = values.get(1)
+    values.set(1, middle + 38)
+    printf(&quot;middle after add: %d\n&quot;, values.get(1))
+    return 0
+}</code></pre>
+<p>Long-term runtime direction: <code>List&lt;T&gt;</code> should use head/tail indices over a backing array where possible, enabling efficient front/back operations without forcing full-array shifts for every pop/shift-style operation.</p>
+<h2>Sets</h2>
+<p><code>Set&lt;T&gt;</code> is an array-backed runtime container with duplicate prevention. It is implemented in Clyth source rather than through a compiler-owned Set backend.</p>
+<pre><code>include &quot;collections&quot;
+
+extern C int32 printf(string fmt, ...)
+
+int32 main() {
+    Set&lt;int32&gt; values = Set([3, 4])
+    values.insert(42)
+    values.insert(42)
+
+    printf(&quot;set length: %d\n&quot;, values.length)
+    printf(&quot;contains 42: %d\n&quot;, values.contains(42))
+    printf(&quot;contains 99: %d\n&quot;, values.contains(99))
+    return 0
+}</code></pre>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p>
+  </footer>
+</body>
+</html>

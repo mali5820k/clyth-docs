@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Runtime Overview · Clyth Documentation</title>
-  <meta name="description" content="Clyth documentation: Runtime Overview">
+  <title>Basics · Clyth Documentation</title>
+  <meta name="description" content="Clyth documentation: Basics">
   <link rel="stylesheet" href="../../assets/css/site.css">
 </head>
 <body>
@@ -39,7 +39,7 @@
 </div>
 <div class="sidebar-group">
 <h4>Basics</h4>
-<a class="" href="../../docs/basics/">Basics</a>
+<a class="active" href="../../docs/basics/">Basics</a>
 <a class="" href="../../docs/basics/hello-world/">Hello World</a>
 <a class="" href="../../docs/basics/command-line-arguments/">Command-Line Arguments</a>
 <a class="" href="../../docs/basics/arrays/">Arrays</a>
@@ -56,7 +56,7 @@
 </div>
 <div class="sidebar-group">
 <h4>Runtime &amp; Modules</h4>
-<a class="active" href="../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../docs/runtime/">Runtime Overview</a>
 <a class="" href="../../docs/runtime/package-includes/">Package Includes</a>
 <a class="" href="../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
 <a class="" href="../../docs/runtime/module-metadata/">Module Metadata</a>
@@ -84,25 +84,16 @@
 </div>
 </aside>
     <article class="doc-page">
-      <span class="breadcrumb">Runtime &amp; Modules</span>
-      <h1>Runtime Overview</h1>
+      <span class="breadcrumb">Basics</span>
+      <h1>Basics</h1>
       
-<p>Clyth runtime functionality is organized under <code>clyth-runtime/</code>.</p>
-<pre><code>clyth-runtime/
-├── c-bindings/
-│   ├── dma/
-│   ├── libwebsockets/
-│   └── openssl/
-├── modules/
-│   ├── module-collections/
-│   ├── module-dma/
-│   ├── module-json/
-│   ├── module-web/
-│   └── module-tls/
-├── runtime_libraries.json
-└── EXTERNAL_LIBRARIES_LICENSES.md</code></pre>
-<p>The <code>modules/</code> directory is the single source of truth for Clyth runtime module source and metadata. C binding source code remains under <code>c-bindings/</code>.</p>
-<p><code>runtime_libraries.json</code> is a compiler-consumed index/cache. Future <code>clyth install</code>, <code>clyth remove</code>, and <code>clyth refresh</code> commands should regenerate it from module metadata rather than expecting developers to edit it directly.</p>
+<p>This section covers the currently supported alpha syntax that should remain stable enough for documentation examples.</p>
+<div class="cards">
+  <a class="mini-card" href="hello-world/"><strong>Hello World</strong><span>Basic extern C call and main function.</span></a>
+  <a class="mini-card" href="command-line-arguments/"><strong>Command-Line Arguments</strong><span>Using string arrays in main.</span></a>
+  <a class="mini-card" href="arrays/"><strong>Arrays</strong><span>Compact dynamic arrays and length access.</span></a>
+  <a class="mini-card" href="strings/"><strong>Strings</strong><span>Native string values and indexing.</span></a>
+</div>
 
     </article>
   </main>

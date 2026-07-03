@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Current Status · Clyth Documentation</title>
+  <meta name="description" content="Clyth documentation: Current Status">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../../../">
+        <span class="brand-mark">C</span>
+        <span>Clyth</span>
+      </a>
+      <div class="nav-links">
+        <a href="../../../docs/overview/">Docs</a>
+        <a href="../../../docs/basics/">Basics</a>
+        <a href="../../../docs/runtime/">Runtime</a>
+        <a href="../../../docs/tooling/">Tooling</a>
+        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="docs-shell">
+    <aside class="sidebar">
+<p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group">
+<h4>Overview</h4>
+<a class="" href="../../../docs/overview/">Overview</a>
+<a class="" href="../../../docs/overview/why-clyth/">Why Clyth Exists</a>
+<a class="active" href="../../../docs/overview/current-status/">Current Status</a>
+<a class="" href="../../../docs/overview/design-boundary/">Design Boundary</a>
+<a class="" href="../../../docs/overview/roadmap/">Roadmap</a>
+<a class="" href="../../../docs/overview/ai-assisted-development/">AI-Assisted Development</a>
+<a class="" href="../../../docs/overview/legal-notes/">Legal Notes</a>
+</div>
+<div class="sidebar-group">
+<h4>Basics</h4>
+<a class="" href="../../../docs/basics/">Basics</a>
+<a class="" href="../../../docs/basics/hello-world/">Hello World</a>
+<a class="" href="../../../docs/basics/command-line-arguments/">Command-Line Arguments</a>
+<a class="" href="../../../docs/basics/arrays/">Arrays</a>
+<a class="" href="../../../docs/basics/strings/">Strings</a>
+</div>
+<div class="sidebar-group">
+<h4>Advanced Language</h4>
+<a class="" href="../../../docs/advanced/">Advanced Language</a>
+<a class="" href="../../../docs/advanced/structs-this/">Structs, Constructors, Methods, and this</a>
+<a class="" href="../../../docs/advanced/collections/">Runtime Collections</a>
+<a class="" href="../../../docs/advanced/maps-keyed-arrays/">Maps and Keyed Arrays</a>
+<a class="" href="../../../docs/advanced/generic-instantiation/">Generic Runtime Instantiation</a>
+<a class="" href="../../../docs/advanced/mecc/">MECC Direction</a>
+</div>
+<div class="sidebar-group">
+<h4>Runtime &amp; Modules</h4>
+<a class="" href="../../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../../docs/runtime/package-includes/">Package Includes</a>
+<a class="" href="../../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
+<a class="" href="../../../docs/runtime/module-metadata/">Module Metadata</a>
+<a class="" href="../../../docs/runtime/dma/">DMA Runtime Module</a>
+<a class="" href="../../../docs/runtime/json-web-tls/">JSON, Web, and TLS</a>
+</div>
+<div class="sidebar-group">
+<h4>0.5 Runtime Targets</h4>
+<a class="" href="../../../docs/standard-library/">Standard Library Direction</a>
+<a class="" href="../../../docs/standard-library/file-io/">File I/O</a>
+<a class="" href="../../../docs/standard-library/networking/">Networking</a>
+<a class="" href="../../../docs/standard-library/math/">Math</a>
+<a class="" href="../../../docs/standard-library/json/">JSON</a>
+<a class="" href="../../../docs/standard-library/hash/">Hashing</a>
+</div>
+<div class="sidebar-group">
+<h4>Tooling &amp; Distribution</h4>
+<a class="" href="../../../docs/tooling/">Tooling Overview</a>
+<a class="" href="../../../docs/tooling/building/">Building</a>
+<a class="" href="../../../docs/tooling/testing/">Testing</a>
+<a class="" href="../../../docs/tooling/regression-suite/">Regression Suite</a>
+<a class="" href="../../../docs/tooling/distribution/">Distribution</a>
+<a class="" href="../../../docs/tooling/future-cli/">Future CLI</a>
+<a class="" href="../../../docs/tooling/package-safety/">Package Safety</a>
+</div>
+</aside>
+    <article class="doc-page">
+      <span class="breadcrumb">Overview</span>
+      <h1>Current Status</h1>
+      
+<p>Clyth currently compiles the Alpha 0.4.0 language subset into native Linux executables through LLVM IR and Zig/musl-based static linking.</p>
+<h2>Implemented or scaffolded areas</h2>
+<ul>
+  <li>ANTLR4 lexer/parser frontend.</li>
+  <li>AST generation.</li>
+  <li>Semantic analysis infrastructure.</li>
+  <li>LLVM IR generation for the current Alpha subset.</li>
+  <li><code>extern C</code> declarations and calls.</li>
+  <li><code>int32 main(string[] args)</code> command-line argument support.</li>
+  <li>Local variables, global variables, user functions, function hoisting, and global hoisting.</li>
+  <li><code>if</code>, <code>else</code>, <code>while</code>, <code>break</code>, and <code>continue</code>.</li>
+  <li>Fixed arrays and compact dynamic arrays.</li>
+  <li>Native string values.</li>
+  <li>Structs, fields, methods, constructors, and implicit <code>this</code>.</li>
+  <li>Runtime collections implemented as Clyth modules: <code>List&lt;T&gt;</code>, <code>Set&lt;T&gt;</code>, and <code>Map&lt;K,V&gt;</code>.</li>
+  <li>Keyed-array syntax for map-style initialization.</li>
+  <li>Explicit package-style runtime includes such as <code>include "collections"</code>.</li>
+  <li>C binding source separation under <code>clyth-runtime/c-bindings/</code>.</li>
+  <li>DMA runtime module with C-backed static archive linking.</li>
+  <li>JSON, web, and TLS runtime module stubs.</li>
+  <li>Runtime module metadata and architecture-aware C binding metadata.</li>
+  <li>Numbered regression suite protecting 11 active samples.</li>
+</ul>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p>
+  </footer>
+</body>
+</html>

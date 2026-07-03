@@ -15,16 +15,16 @@
         <span>Clyth</span>
       </a>
       <div class="nav-links">
-        <a href="docs/getting-started/">Getting Started</a>
-        <a href="docs/language/">Language</a>
+        <a href="docs/overview/">Docs</a>
+        <a href="docs/basics/">Basics</a>
         <a href="docs/runtime/">Runtime</a>
-        <a href="docs/modules/">Modules</a>
+        <a href="docs/tooling/">Tooling</a>
         <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main class="home">
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Clyth 0.4.0-alpha</p>
@@ -34,19 +34,17 @@
           The compiler understands the language; the runtime ecosystem provides capabilities.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="docs/getting-started/">Start Reading</a>
+          <a class="button primary" href="docs/overview/">Read the Docs</a>
           <a class="button secondary" href="https://github.com/mali5820k/Cobralyth/releases/tag/v0.4.0">View Release</a>
         </div>
       </div>
 
       <div class="hero-card">
         <div class="code-window">
-          <div class="window-bar">
-            <span></span><span></span><span></span>
-          </div>
-<pre><code>include "collections"
+          <div class="window-bar"><span></span><span></span><span></span></div>
+          <pre><code>include &quot;collections&quot;
 
-int32 main(string[] args){
+int32 main() {
     List&lt;int32&gt; numbers = List([1, 2, 3])
 
     numbers.push(4)
@@ -75,27 +73,27 @@ int32 main(string[] args){
     <section class="docs-grid">
       <h2>Documentation</h2>
       <div class="grid">
-        <a class="doc-card" href="docs/getting-started/">
-          <h3>Getting Started</h3>
-          <p>Build Clyth, run the sample suite, and compile your first program.</p>
+        <a class="doc-card" href="docs/overview/">
+          <h3>Overview</h3>
+          <p>The project goals, current status, design boundary, roadmap, and release philosophy.</p>
         </a>
-        <a class="doc-card" href="docs/language/">
-          <h3>Language Guide</h3>
-          <p>Syntax, functions, structs, generics, arrays, and modules.</p>
+        <a class="doc-card" href="docs/basics/">
+          <h3>Basics</h3>
+          <p>Hello World, command-line arguments, arrays, strings, and the current alpha syntax.</p>
         </a>
         <a class="doc-card" href="docs/runtime/">
           <h3>Runtime</h3>
-          <p>Collections, C ABI bindings, and future standard runtime modules.</p>
+          <p>Runtime modules, package-style includes, C ABI policy, and module metadata.</p>
         </a>
-        <a class="doc-card" href="docs/modules/">
-          <h3>Modules</h3>
-          <p>Package metadata, module layout, and the path toward registry-hosted tarballs.</p>
+        <a class="doc-card" href="docs/tooling/">
+          <h3>Tooling</h3>
+          <p>Build commands, regression tests, distribution artifacts, CLI direction, and package safety.</p>
         </a>
       </div>
     </section>
   </main>
 
-  <footer>
+  <footer class="site-footer">
     <p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p>
   </footer>
 </body>
