@@ -1,12 +1,6 @@
-# Clyth Documentation
+# Clyth Docs Starter
 
-Static documentation site for Clyth.
-
-Published site:
-
-```text
-https://mali5820k.github.io/clyth-docs/
-```
+A starter GitHub Pages template for the Clyth documentation site.
 
 Recommended GitHub Pages settings:
 
@@ -14,10 +8,8 @@ Recommended GitHub Pages settings:
 - Branch: `main`
 - Folder: `/root`
 
-## License
+The documentation content is licensed under CC BY 4.0. Code examples are MIT unless otherwise specified.
 
-Copyright © 2026 Muhammad Ali
+## Layout note
 
-The Clyth documentation is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
-
-Source code examples are licensed under the MIT License unless otherwise specified.
+This static site is hosted from the repository root and includes a responsive documentation sidebar.
