@@ -25,11 +25,12 @@
   </header>
 
   <main class="docs-shell">
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="Documentation navigation">
 <p class="sidebar-title">Clyth Docs</p>
 <div class="sidebar-group">
 <h4>Overview</h4>
 <a class="" href="../../../docs/overview/">Overview</a>
+<a class="" href="../../../docs/getting-started/">Getting Started</a>
 <a class="" href="../../../docs/overview/why-clyth/">Why Clyth Exists</a>
 <a class="" href="../../../docs/overview/current-status/">Current Status</a>
 <a class="" href="../../../docs/overview/design-boundary/">Design Boundary</a>
@@ -40,6 +41,7 @@
 <div class="sidebar-group">
 <h4>Basics</h4>
 <a class="" href="../../../docs/basics/">Basics</a>
+<a class="" href="../../../docs/language/">Language Guide</a>
 <a class="" href="../../../docs/basics/hello-world/">Hello World</a>
 <a class="" href="../../../docs/basics/command-line-arguments/">Command-Line Arguments</a>
 <a class="" href="../../../docs/basics/arrays/">Arrays</a>
@@ -57,6 +59,7 @@
 <div class="sidebar-group">
 <h4>Runtime &amp; Modules</h4>
 <a class="" href="../../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../../docs/modules/">Modules</a>
 <a class="" href="../../../docs/runtime/package-includes/">Package Includes</a>
 <a class="" href="../../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
 <a class="" href="../../../docs/runtime/module-metadata/">Module Metadata</a>
@@ -86,12 +89,10 @@
     <article class="doc-page">
       <span class="breadcrumb">Tooling &amp; Distribution</span>
       <h1>Regression Suite Policy</h1>
-      
-<p>Clyth's language regression suite uses numbered sample files:</p>
+      <p>Clyth's language regression suite uses numbered sample files:</p>
 <pre><code>NN_0_X_feature_name.clyth</code></pre>
 <p><code>NN</code> is the stable runner order and <code>0_X</code> is the first alpha release line where the feature is supported. New regression tests should be promoted into the numbered suite only after their syntax and expected output reflect current Clyth behavior.</p>
 <p>Historical/manual examples should not be silently executed by the release runner.</p>
-
     </article>
   </main>
 

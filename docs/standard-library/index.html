@@ -25,11 +25,12 @@
   </header>
 
   <main class="docs-shell">
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="Documentation navigation">
 <p class="sidebar-title">Clyth Docs</p>
 <div class="sidebar-group">
 <h4>Overview</h4>
 <a class="" href="../../docs/overview/">Overview</a>
+<a class="" href="../../docs/getting-started/">Getting Started</a>
 <a class="" href="../../docs/overview/why-clyth/">Why Clyth Exists</a>
 <a class="" href="../../docs/overview/current-status/">Current Status</a>
 <a class="" href="../../docs/overview/design-boundary/">Design Boundary</a>
@@ -40,6 +41,7 @@
 <div class="sidebar-group">
 <h4>Basics</h4>
 <a class="" href="../../docs/basics/">Basics</a>
+<a class="" href="../../docs/language/">Language Guide</a>
 <a class="" href="../../docs/basics/hello-world/">Hello World</a>
 <a class="" href="../../docs/basics/command-line-arguments/">Command-Line Arguments</a>
 <a class="" href="../../docs/basics/arrays/">Arrays</a>
@@ -57,6 +59,7 @@
 <div class="sidebar-group">
 <h4>Runtime &amp; Modules</h4>
 <a class="" href="../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../docs/modules/">Modules</a>
 <a class="" href="../../docs/runtime/package-includes/">Package Includes</a>
 <a class="" href="../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
 <a class="" href="../../docs/runtime/module-metadata/">Module Metadata</a>
@@ -86,8 +89,7 @@
     <article class="doc-page">
       <span class="breadcrumb">0.5 Runtime Targets</span>
       <h1>Standard Library Direction</h1>
-      
-<p>0.5.0 should begin showing that Clyth can grow through runtime modules rather than compiler changes.</p>
+      <p>0.5.0 should begin showing that Clyth can grow through runtime modules rather than compiler changes.</p>
 <p>The priority is to cover the base functionality expected from a systems language: file I/O, hashing, JSON, networking, and common math utilities.</p>
 <div class="cards">
   <a class="mini-card" href="file-io/"><strong>File I/O</strong><span>Python-like ergonomics with Clyth semantics.</span></a>
@@ -95,7 +97,6 @@
   <a class="mini-card" href="math/"><strong>Math</strong><span>Basic numeric utilities and future runtime math modules.</span></a>
   <a class="mini-card" href="hash/"><strong>Hashing</strong><span>Rapidhash-backed hash module direction.</span></a>
 </div>
-
     </article>
   </main>
 

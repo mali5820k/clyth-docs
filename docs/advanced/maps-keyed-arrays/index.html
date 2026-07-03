@@ -25,11 +25,12 @@
   </header>
 
   <main class="docs-shell">
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="Documentation navigation">
 <p class="sidebar-title">Clyth Docs</p>
 <div class="sidebar-group">
 <h4>Overview</h4>
 <a class="" href="../../../docs/overview/">Overview</a>
+<a class="" href="../../../docs/getting-started/">Getting Started</a>
 <a class="" href="../../../docs/overview/why-clyth/">Why Clyth Exists</a>
 <a class="" href="../../../docs/overview/current-status/">Current Status</a>
 <a class="" href="../../../docs/overview/design-boundary/">Design Boundary</a>
@@ -40,6 +41,7 @@
 <div class="sidebar-group">
 <h4>Basics</h4>
 <a class="" href="../../../docs/basics/">Basics</a>
+<a class="" href="../../../docs/language/">Language Guide</a>
 <a class="" href="../../../docs/basics/hello-world/">Hello World</a>
 <a class="" href="../../../docs/basics/command-line-arguments/">Command-Line Arguments</a>
 <a class="" href="../../../docs/basics/arrays/">Arrays</a>
@@ -57,6 +59,7 @@
 <div class="sidebar-group">
 <h4>Runtime &amp; Modules</h4>
 <a class="" href="../../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../../docs/modules/">Modules</a>
 <a class="" href="../../../docs/runtime/package-includes/">Package Includes</a>
 <a class="" href="../../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
 <a class="" href="../../../docs/runtime/module-metadata/">Module Metadata</a>
@@ -86,8 +89,7 @@
     <article class="doc-page">
       <span class="breadcrumb">Advanced Language</span>
       <h1>Maps and Keyed Arrays</h1>
-      
-<p>Maps use normal <code>Map&lt;K,V&gt;</code> generic syntax and keyed-array initialization. The keyed array is a language-level literal form; Map behavior belongs in the runtime.</p>
+      <p>Maps use normal <code>Map&lt;K,V&gt;</code> generic syntax and keyed-array initialization. The keyed array is a language-level literal form; Map behavior belongs in the runtime.</p>
 <pre><code>include &quot;collections&quot;
 
 extern C int32 printf(string fmt, ...)
@@ -117,7 +119,6 @@ int32 main() {
     &quot;two&quot;: 2
 ])</code></pre>
 <p>The compiler recognizes keyed-array literals and constructor calls; the runtime owns the Map implementation.</p>
-
     </article>
   </main>
 
