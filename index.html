@@ -4,99 +4,69 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Clyth Documentation</title>
-  <meta name="description" content="Documentation for Clyth, an LLVM-based systems programming language.">
+  <meta name="description" content="Documentation for Clyth 0.5.0, an LLVM-backed ahead-of-time systems language and runtime ecosystem foundation.">
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
   <header class="site-header">
     <nav class="nav">
-      <a class="brand" href="./">
-        <span class="brand-mark">C</span>
-        <span>Clyth</span>
-      </a>
+      <a class="brand" href="./"><span class="brand-mark">C</span><span>Clyth</span></a>
       <div class="nav-links">
-        <a href="docs/overview/">Docs</a>
-        <a href="docs/basics/">Basics</a>
-        <a href="docs/runtime/">Runtime</a>
-        <a href="docs/tooling/">Tooling</a>
+        <a href="docs/overview.html">Docs</a>
+        <a href="docs/language.html">Language</a>
+        <a href="docs/runtime.html">Runtime</a>
+        <a href="docs/tooling.html">Tooling</a>
         <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
       </div>
     </nav>
   </header>
-
   <main class="home">
     <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Clyth 0.4.0-alpha</p>
-        <h1>An LLVM-based systems programming language with a runtime-first architecture.</h1>
-        <p class="lead">
-          Clyth explores explicit control, predictable execution, and a smaller compiler boundary.
-          The compiler understands the language; the runtime ecosystem provides capabilities.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="docs/getting-started/">Start Reading</a>
-          <a class="button secondary" href="https://github.com/mali5820k/Cobralyth/releases/tag/v0.4.0">View Release</a>
-        </div>
+      <div>
+        <p class="eyebrow">Clyth 0.5.0 · Runtime Ecosystem Foundation</p>
+        <h1>Systems programming with a clear runtime boundary.</h1>
+        <p class="lead">Clyth is an LLVM-backed ahead-of-time systems language project focused on native Linux artifacts, explicit language semantics, and a runtime model where Clyth wrappers call through small auditable ABI layers into native providers such as libuv, yyjson, and rapidhash.</p>
+        <div class="badge-row"><span class="badge">LLVM IR backend</span><span class="badge">musl libc</span><span class="badge">LLVM libc++</span><span class="badge">stable ABI handles</span></div>
+        <div class="hero-actions"><a class="button primary" href="docs/overview.html">Read the docs</a><a class="button secondary" href="docs/modules.html">Module architecture</a></div>
       </div>
-
       <div class="hero-card">
-        <div class="code-window">
-          <div class="window-bar">
-            <span></span><span></span><span></span>
-          </div>
-<pre><code>include "collections"
+        <div class="code-window"><div class="window-bar"><span></span><span></span><span></span></div><pre><code>include &quot;https&quot;
+include &quot;json&quot;
 
 int32 main(string[] args) {
-    List&lt;int32&gt; numbers = List([1, 2, 3])
+    Router router = Router()
 
-    numbers.push(4)
+    router.get(&quot;/&quot;, (Request request, Response response) =&gt; {
+        response.send(200, render_home_page())
+    })
 
-    return numbers.get(0)
-}</code></pre>
-        </div>
+    router.post(&quot;/api/message&quot;, (Request request, Response response) =&gt; {
+        println(`received body: ${request.body()}`)
+        response.send(200, JSON.stringify({ &quot;received&quot;: true }))
+    })
+
+    ServerConfiguration configuration = ServerConfiguration(9090, router)
+    Server server = Server(configuration)
+    server.start()
+
+    return 0
+}</code></pre></div>
       </div>
     </section>
-
     <section class="principles">
-      <article>
-        <h2>Smaller Compiler</h2>
-        <p>The compiler focuses on syntax, semantics, generic lowering, and LLVM IR generation.</p>
-      </article>
-      <article>
-        <h2>Richer Runtime</h2>
-        <p>Collections, hashing, file I/O, networking, and JSON belong in ordinary Clyth modules.</p>
-      </article>
-      <article>
-        <h2>C ABI Boundary</h2>
-        <p>Official native bindings target C and musl-friendly portability rather than C++ runtime dependencies.</p>
-      </article>
+      <article><h2>Compiler-owned semantics</h2><p>Clyth owns syntax, typing, semantic analysis, and lowering. LLVM is used as a mature backend, not as the identity of the language.</p></article>
+      <article><h2>Native capability through wrappers</h2><p>Runtime features are exposed as Clyth APIs while implementation details stay below a stable ABI boundary.</p></article>
+      <article><h2>Auditable artifacts</h2><p>The 0.5.0 release candidate validates native artifacts through musl/libc++ builds and recursive GNU/glibc/libstdc++ audit checks.</p></article>
     </section>
-
     <section class="docs-grid">
-      <h2>Documentation</h2>
+      <h2>Documentation paths</h2>
       <div class="grid">
-        <a class="doc-card" href="docs/getting-started/">
-          <h3>Getting Started</h3>
-          <p>Build Clyth, run the sample suite, and compile your first program.</p>
-        </a>
-        <a class="doc-card" href="docs/language/">
-          <h3>Language Guide</h3>
-          <p>Syntax, functions, structs, generics, arrays, and modules.</p>
-        </a>
-        <a class="doc-card" href="docs/runtime/">
-          <h3>Runtime</h3>
-          <p>Collections, C ABI bindings, and future standard runtime modules.</p>
-        </a>
-        <a class="doc-card" href="docs/modules/">
-          <h3>Modules</h3>
-          <p>Package metadata, module layout, and the path toward registry-hosted tarballs.</p>
-        </a>
+        <a class="doc-card" href="docs/language.html"><h3>Language</h3><p>Variables, structs, arrays, generics, functions, lambdas, extension methods, and template interpolation.</p></a>
+        <a class="doc-card" href="docs/runtime.html"><h3>Runtime Architecture</h3><p>Wrapper layers, handles, ABI boundaries, and how Clyth calls native-backed functionality.</p></a>
+        <a class="doc-card" href="docs/modules.html"><h3>Modules</h3><p>Module layout, module.json, native binding layers, build integration, and custom module authoring.</p></a>
+        <a class="doc-card" href="docs/standard-library.html"><h3>Standard Library</h3><p>File I/O, JSON, hashing, collections, server APIs, and exported methods with parameters and return types.</p></a>
       </div>
     </section>
   </main>
-
-  <footer class="site-footer">
-    <p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p>
-  </footer>
 </body>
 </html>

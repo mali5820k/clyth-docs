@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roadmap · Clyth Documentation</title>
+  <meta name="description" content="Clyth 0.5.0 documentation: Roadmap">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a>
+      <div class="nav-links">
+        <a href="overview.html">Docs</a>
+        <a href="language.html">Language</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="tooling.html">Tooling</a>
+        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
+      </div>
+    </nav>
+  </header>
+  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
+  <div class="sidebar-backdrop" hidden></div>
+  <main class="docs-shell">
+    <aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group">
+<h4>Project</h4>
+<a class="" href="overview.html">Overview</a>
+<a class="" href="getting-started.html">Getting Started</a>
+<a class="active" href="roadmap.html">Roadmap</a>
+</div>
+<div class="sidebar-group">
+<h4>Language</h4>
+<a class="" href="language.html">Language Guide</a>
+<a class="" href="mecc.html">MECC</a>
+</div>
+<div class="sidebar-group">
+<h4>Runtime</h4>
+<a class="" href="runtime.html">Runtime Architecture</a>
+<a class="" href="modules.html">Module System</a>
+<a class="" href="standard-library.html">Standard Library</a>
+</div>
+<div class="sidebar-group">
+<h4>Tooling</h4>
+<a class="" href="tooling.html">Tooling & Build</a>
+</div></aside>
+    <article class="doc-page">
+<span class="breadcrumb">Project</span>
+<h1>Roadmap</h1>
+<p class="lead">The roadmap follows the same principle as the runtime architecture: keep the language identity above any one implementation dependency while still using mature tooling where it provides real value.</p>
+<h2>0.5.0 — Runtime Ecosystem Foundation</h2>
+<p>Lock the current alpha language/runtime surface, validate the Clyth wrapper → ABI → native provider model, and release a clean musl/libc++-audited artifact path.</p>
+<ul>
+  <li>20/20 regression suite passing.</li>
+  <li>Web backend demo with libuv event loop, router callbacks, Request/Response wrappers, and JSON POST flow.</li>
+  <li>File I/O routed through the native runtime provider.</li>
+  <li>Recursive audit verifying no GNU/glibc/libstdc++ markers in checked release artifacts.</li>
+</ul>
+<h2>0.6.0 — Compiler Simplification and Bootstrap Path</h2>
+<p>The next major engineering step is to make the compiler easier to own. That means reducing dependency complexity while preserving the artifact model that 0.5.0 established.</p>
+<ul>
+  <li>Begin rewriting the frontend in Clyth proper.</li>
+  <li>Replace ANTLR with a compact Pratt parser.</li>
+  <li>Introduce Clyth-owned AST and IR structures.</li>
+  <li>Create a Clyth-side LLVM IR emission library/interface.</li>
+  <li>Keep LLVM optimization/code generation available through IR and command-line tools.</li>
+</ul>
+<h2>Later milestones</h2>
+<ul>
+  <li>Standalone x86_64-linux-musl and aarch64-linux-musl compiler artifacts.</li>
+  <li>Expanded module build/distribution tooling.</li>
+  <li>MECC ownership analysis and cleanup insertion.</li>
+  <li>Further reduction of LLVM C++ API dependency.</li>
+  <li>Self-hosted compiler/runtime ecosystem direction.</li>
+</ul>
+</article>
+  </main>
+  <script>
+    const toggle = document.querySelector('.mobile-docs-toggle');
+    const backdrop = document.querySelector('.sidebar-backdrop');
+    function closeSidebar() { document.body.classList.remove('sidebar-open'); toggle?.setAttribute('aria-expanded', 'false'); backdrop?.setAttribute('hidden', ''); }
+    toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('sidebar-open'); toggle.setAttribute('aria-expanded', String(open)); if (open) backdrop?.removeAttribute('hidden'); else backdrop?.setAttribute('hidden', ''); });
+    backdrop?.addEventListener('click', closeSidebar);
+  </script>
+</body>
+</html>

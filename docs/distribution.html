@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Distribution · Clyth Documentation</title><meta name="description" content="Clyth 0.5.0 documentation: Distribution"><link rel="stylesheet" href="../assets/css/site.css"></head><body><header class="site-header"><nav class="nav"><a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header><main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group"><h4>Project</h4>
+<a class="" href="overview.html">Overview</a>
+<a class="" href="getting-started.html">Getting Started</a>
+<a class="" href="roadmap.html">Roadmap</a>
+</div>
+<div class="sidebar-group"><h4>Language</h4>
+<a class="" href="basics.html">Basics</a>
+<a class="" href="language.html">Language Guide</a>
+<a class="" href="advanced.html">Advanced</a>
+</div>
+<div class="sidebar-group"><h4>Runtime</h4>
+<a class="" href="runtime.html">Runtime Architecture</a>
+<a class="" href="modules.html">Modules</a>
+<a class="" href="standard-library.html">Standard Library</a>
+</div>
+<div class="sidebar-group"><h4>Tooling</h4>
+<a class="" href="tooling.html">Tooling</a>
+<a class="active" href="distribution.html">Distribution</a>
+</div>
+</aside><article class="doc-page"><span class="breadcrumb">Distribution</span><h1>Distribution</h1><p class="lead">Distribution is part of the trust story: the artifact should be lean, reproducible, and clear about what it contains.</p><section class="doc-split"><div class="doc-split-text"><h2>Lean release artifact</h2><p>The release tarball should not contain giant source/build trees. Users should receive the compiler, runtime files needed to build programs, samples, docs, and license notices.</p></div><div class="doc-split-code"><pre><code>clyth-dist.tar.gz
+  clyth
+  docs/
+  sample-clyth-programs/
+  clyth-runtime/
+  LICENSE.md
+  NOTICE.md</code></pre></div></section><section class="doc-split"><div class="doc-split-text"><h2>Audit before release</h2><p>The audit step protects the release promise that artifacts are not accidentally tied to glibc or GNU libstdc++.</p></div><div class="doc-split-code"><pre><code>./audit_no_gnu_abi.sh
+
+Expected:
+  [ OK ] No GNU/glibc/libstdc++ ABI markers found</code></pre></div></section></article></main><footer class="site-footer"><p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p></footer></body></html>

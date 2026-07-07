@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Basics · Clyth Documentation</title><meta name="description" content="Clyth 0.5.0 documentation: Basics"><link rel="stylesheet" href="../assets/css/site.css"></head><body><header class="site-header"><nav class="nav"><a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header><main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group"><h4>Project</h4>
+<a class="" href="overview.html">Overview</a>
+<a class="" href="getting-started.html">Getting Started</a>
+<a class="" href="roadmap.html">Roadmap</a>
+</div>
+<div class="sidebar-group"><h4>Language</h4>
+<a class="active" href="basics.html">Basics</a>
+<a class="" href="language.html">Language Guide</a>
+<a class="" href="advanced.html">Advanced</a>
+</div>
+<div class="sidebar-group"><h4>Runtime</h4>
+<a class="" href="runtime.html">Runtime Architecture</a>
+<a class="" href="modules.html">Modules</a>
+<a class="" href="standard-library.html">Standard Library</a>
+</div>
+<div class="sidebar-group"><h4>Tooling</h4>
+<a class="" href="tooling.html">Tooling</a>
+<a class="" href="distribution.html">Distribution</a>
+</div>
+</aside><article class="doc-page"><span class="breadcrumb">Basics</span><h1>Basics</h1><p class="lead">The basics page is intentionally short: enough to orient new readers before they move into the language and runtime guides.</p><section class="doc-split"><div class="doc-split-text"><h2>Main and arguments</h2><p>A Clyth executable starts at <code>main</code>. Command-line arguments are available through <code>string[] args</code>.</p></div><div class="doc-split-code"><pre><code>int32 main(string[] args) {
+    println(`${args.length}`)
+    return 0
+}</code></pre></div></section><section class="doc-split"><div class="doc-split-text"><h2>Structs and methods</h2><p>Structs define data. Methods define behavior. The behavior may live inside the struct declaration or as an extension method.</p></div><div class="doc-split-code"><pre><code>struct Counter {
+    int32 value
+}
+
+void Counter.increment() {
+    this.value = this.value + 1
+}</code></pre></div></section></article></main><footer class="site-footer"><p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p></footer></body></html>

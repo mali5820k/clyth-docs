@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MECC · Clyth Documentation</title>
+  <meta name="description" content="Clyth 0.5.0 documentation: MECC">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a>
+      <div class="nav-links">
+        <a href="overview.html">Docs</a>
+        <a href="language.html">Language</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="tooling.html">Tooling</a>
+        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
+      </div>
+    </nav>
+  </header>
+  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
+  <div class="sidebar-backdrop" hidden></div>
+  <main class="docs-shell">
+    <aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group">
+<h4>Project</h4>
+<a class="" href="overview.html">Overview</a>
+<a class="" href="getting-started.html">Getting Started</a>
+<a class="" href="roadmap.html">Roadmap</a>
+</div>
+<div class="sidebar-group">
+<h4>Language</h4>
+<a class="" href="language.html">Language Guide</a>
+<a class="active" href="mecc.html">MECC</a>
+</div>
+<div class="sidebar-group">
+<h4>Runtime</h4>
+<a class="" href="runtime.html">Runtime Architecture</a>
+<a class="" href="modules.html">Module System</a>
+<a class="" href="standard-library.html">Standard Library</a>
+</div>
+<div class="sidebar-group">
+<h4>Tooling</h4>
+<a class="" href="tooling.html">Tooling & Build</a>
+</div></aside>
+    <article class="doc-page">
+<span class="breadcrumb">Language Research</span>
+<h1>MECC</h1>
+<p class="lead">MECC, or Memory-Explicit Control and Cleanup, is Clyth's planned ownership and cleanup model. It is not part of 0.5.0 syntax yet, but the runtime work in 0.5.0 provides the kind of real program structure MECC needs to analyze later.</p>
+<h2>Motivation</h2>
+<p>MECC explores ownership analysis at a higher granularity than individual object bookkeeping. The intent is to preserve predictable systems behavior while reducing repetitive cleanup code in larger programs.</p>
+<p>The model introduces ownership estates: groups of related allocations whose lifetimes can be reasoned about, optimized, and cleaned up together. Estate-level metadata may still track references or relationships. The distinction is that lifetime reasoning is organized around ownership regions rather than treating every allocation as an isolated object-level policy problem.</p>
+<h2>Planned analysis pipeline</h2>
+<ul>
+  <li>Detect ownership relationships across variables, fields, and runtime wrappers.</li>
+  <li>Group related allocations into logical estates.</li>
+  <li>Infer cleanup points where ownership is clear.</li>
+  <li>Reduce unnecessary object-level lifetime bookkeeping.</li>
+  <li>Fall back to explicit estate management when analysis cannot prove safe behavior.</li>
+</ul>
+<section class="doc-split ">
+  <div class="doc-split-text">
+    <h2>Why 0.5.0 matters for MECC</h2>
+    <p>Ownership analysis should not be developed only against artificial examples. 0.5.0 gives Clyth realistic patterns: files, requests, responses, JSON values, collections, callback lifetimes, native handles, and module boundaries.</p>
+  </div>
+  <div class="doc-split-code"><pre><code>Request request
+Response response
+JsonValue value
+List&lt;string&gt; messages
+File handle
+
+Potential future estate:
+    request-lifetime estate
+        request body
+        parsed JSON tree
+        response payload
+        temporary route data</code></pre></div>
+</section>
+<h2>Relationship to handles</h2>
+<p>Handles are not the final memory model, but they are useful for ABI stability today. Later MECC analysis can reason about wrapper lifetimes: when a request object is valid, when a response handle may be used, and when runtime-owned state can be released.</p>
+</article>
+  </main>
+  <script>
+    const toggle = document.querySelector('.mobile-docs-toggle');
+    const backdrop = document.querySelector('.sidebar-backdrop');
+    function closeSidebar() { document.body.classList.remove('sidebar-open'); toggle?.setAttribute('aria-expanded', 'false'); backdrop?.setAttribute('hidden', ''); }
+    toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('sidebar-open'); toggle.setAttribute('aria-expanded', String(open)); if (open) backdrop?.removeAttribute('hidden'); else backdrop?.setAttribute('hidden', ''); });
+    backdrop?.addEventListener('click', closeSidebar);
+  </script>
+</body>
+</html>

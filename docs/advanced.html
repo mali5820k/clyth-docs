@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Advanced Language · Clyth Documentation</title><meta name="description" content="Clyth 0.5.0 documentation: Advanced Language"><link rel="stylesheet" href="../assets/css/site.css"></head><body><header class="site-header"><nav class="nav"><a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header><main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group"><h4>Project</h4>
+<a class="" href="overview.html">Overview</a>
+<a class="" href="getting-started.html">Getting Started</a>
+<a class="" href="roadmap.html">Roadmap</a>
+</div>
+<div class="sidebar-group"><h4>Language</h4>
+<a class="" href="basics.html">Basics</a>
+<a class="" href="language.html">Language Guide</a>
+<a class="active" href="advanced.html">Advanced</a>
+</div>
+<div class="sidebar-group"><h4>Runtime</h4>
+<a class="" href="runtime.html">Runtime Architecture</a>
+<a class="" href="modules.html">Modules</a>
+<a class="" href="standard-library.html">Standard Library</a>
+</div>
+<div class="sidebar-group"><h4>Tooling</h4>
+<a class="" href="tooling.html">Tooling</a>
+<a class="" href="distribution.html">Distribution</a>
+</div>
+</aside><article class="doc-page"><span class="breadcrumb">Advanced</span><h1>Advanced Language</h1><p class="lead">These are the pieces that matter for module authors and the 0.6.0 bootstrap direction.</p><section class="doc-split"><div class="doc-split-text"><h2>Extension methods as organization</h2><p>Extension methods separate implementation from data layout. They let behavior live outside a struct declaration while duplicate method definitions remain invalid.</p></div><div class="doc-split-code"><pre><code>struct TestStruct {}
+
+void TestStruct.addTwo(int32 one, int32 two) {
+    println(`${one + two}`)
+}</code></pre></div></section><section class="doc-split"><div class="doc-split-text"><h2>Callback ABI discipline</h2><p>When a callback crosses a native boundary, keep the ABI simple. Pass handles and expose richer behavior through methods.</p></div><div class="doc-split-code"><pre><code>function&lt;void(Request, Response)&gt; handler = (request, response) =&gt; {
+    response.send(200, request.body())
+}</code></pre></div></section><section class="doc-split"><div class="doc-split-text"><h2>0.6.0 compiler direction</h2><p>The goal after 0.5.0 is not more frontend complexity. The goal is to remove it: Pratt parser, Clyth-owned IR, and a Clyth-side LLVM IR generation library.</p></div><div class="doc-split-code"><pre><code>Clyth source
+    ↓
+Pratt parser in Clyth
+    ↓
+Clyth IR
+    ↓
+LLVM IR text
+    ↓
+llc / lld / Zig toolchain</code></pre></div></section></article></main><footer class="site-footer"><p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p></footer></body></html>

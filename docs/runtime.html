@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Runtime Architecture · Clyth Documentation</title>
+  <meta name="description" content="Clyth 0.5.0 documentation: Runtime Architecture">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a>
+      <div class="nav-links">
+        <a href="overview.html">Docs</a>
+        <a href="language.html">Language</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="tooling.html">Tooling</a>
+        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
+      </div>
+    </nav>
+  </header>
+  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
+  <div class="sidebar-backdrop" hidden></div>
+  <main class="docs-shell">
+    <aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
+<div class="sidebar-group">
+<h4>Project</h4>
+<a class="" href="overview.html">Overview</a>
+<a class="" href="getting-started.html">Getting Started</a>
+<a class="" href="roadmap.html">Roadmap</a>
+</div>
+<div class="sidebar-group">
+<h4>Language</h4>
+<a class="" href="language.html">Language Guide</a>
+<a class="" href="mecc.html">MECC</a>
+</div>
+<div class="sidebar-group">
+<h4>Runtime</h4>
+<a class="active" href="runtime.html">Runtime Architecture</a>
+<a class="" href="modules.html">Module System</a>
+<a class="" href="standard-library.html">Standard Library</a>
+</div>
+<div class="sidebar-group">
+<h4>Tooling</h4>
+<a class="" href="tooling.html">Tooling & Build</a>
+</div></aside>
+    <article class="doc-page">
+<span class="breadcrumb">Runtime</span>
+<h1>Runtime Architecture</h1>
+<p class="lead">Clyth runtime modules are built around a deliberate boundary: Clyth source presents ergonomic types and methods; native code owns implementation details; the ABI between them stays small, explicit, and auditable.</p>
+<section class="doc-split ">
+  <div class="doc-split-text">
+    <h2>The wrapper → ABI → provider chain</h2>
+    <p>A native-backed module is not a random collection of extern functions. It is a layered design. The Clyth wrapper defines what application code sees. The ABI layer defines the stable functions and value representations crossing into native code. The provider implements those functions using a library such as libuv or yyjson.</p>
+  </div>
+  <div class="doc-split-code"><pre><code>Clyth application
+    ↓ calls
+Clyth wrapper type / method
+    ↓ calls
+extern C ABI function
+    ↓ implemented by
+native provider
+    ↓ uses
+libuv / yyjson / rapidhash / OS</code></pre></div>
+</section>
+<h2>Why handles exist</h2>
+<p>Native libraries often expose structs whose layout is not part of Clyth's language design. Passing those structs directly into Clyth would couple user code to native layout, native versioning, and implementation choices. A handle avoids that coupling.</p>
+<section class="doc-split wide">
+  <div class="doc-split-text">
+    <h2>Handle-based Request example</h2>
+    <p>The Clyth <code>Request</code> value stores an opaque handle. The actual request state may contain parser buffers, socket state, libuv handles, body storage, and routing metadata. That state is owned by the native provider. Clyth methods ask the provider for specific information through ABI calls.</p>
+  </div>
+  <div class="doc-split-code"><pre><code>struct Request {
+    private int64 native_handle
+}
+
+string Request.body() {
+    return clyth_https_request_body(this.native_handle)
+}
+
+string Request.method() {
+    return clyth_https_request_method(this.native_handle)
+}
+
+string Request.path() {
+    return clyth_https_request_path(this.native_handle)
+}</code></pre></div>
+</section>
+<h2>How a handle reaches the native function</h2>
+<ol class="flow-list">
+  <li><strong>Native request arrives.</strong> libuv accepts the connection and llhttp parses the request line, headers, and body.</li>
+  <li><strong>Runtime state is stored.</strong> The native provider records request data in a table or connection-owned structure and assigns a handle.</li>
+  <li><strong>Clyth wrapper is created.</strong> The route callback receives a <code>Request</code> whose private field contains that handle.</li>
+  <li><strong>User calls a method.</strong> <code>request.body()</code> is a Clyth method, not direct native struct access.</li>
+  <li><strong>The method calls the ABI.</strong> The wrapper calls <code>clyth_https_request_body(handle)</code>.</li>
+  <li><strong>The native provider resolves the handle.</strong> The C implementation looks up the request state and returns a Clyth string value.</li>
+</ol>
+<section class="doc-split wide">
+  <div class="doc-split-text">
+    <h2>ABI header and provider implementation</h2>
+    <p>The wrapper knows the ABI function name because the module author declares it. The compiler links the native implementation because module metadata tells the build which native archive belongs to the wrapper. This is the answer to “where does <code>request_body()</code> come from?”: it is part of the module ABI contract.</p>
+  </div>
+  <div class="doc-split-code"><pre><code>// https.clyth wrapper layer
+extern C string clyth_https_request_body(int64 request_handle)
+
+string Request.body() {
+    return clyth_https_request_body(this.native_handle)
+}
+
+// native/clyth_https.h
+clyth_string clyth_https_request_body(int64_t request_handle);
+
+// native/clyth_https.c
+clyth_string clyth_https_request_body(int64_t request_handle) {
+    request_state* request = lookup_request(request_handle);
+    return clyth_string_from_bytes(request-&gt;body, request-&gt;body_length);
+}</code></pre></div>
+</section>
+<h2>Why not expose raw native structs?</h2>
+<p>Exposing raw native structs makes a Clyth module fragile. If a public Clyth struct contains a native library layout, then upgrading the native library can become a language-level breaking change. It also makes it harder to replace a provider. A <code>Request</code> should still be a <code>Request</code> if the server internals evolve from libuv to another event provider later.</p>
+<div class="callout"><strong>Design rule</strong><p>The handle is not the public API. The Clyth methods are the public API. The handle is the bridge that lets the method reach runtime-owned state without exposing native memory layout.</p></div>
+<section class="doc-split ">
+  <div class="doc-split-text">
+    <h2>Stable ABI shape</h2>
+    <p>ABI functions should prefer stable Clyth-compatible values: integers, booleans, strings represented through the Clyth string ABI, handles, and simple structs whose layout is explicitly owned by Clyth. Avoid passing third-party native structs across the public module boundary.</p>
+  </div>
+  <div class="doc-split-code"><pre><code>Good ABI surface:
+    int64 handle
+    string clyth_https_request_body(int64 handle)
+    void clyth_https_response_send(int64 handle, int32 status, string payload)
+
+Fragile ABI surface:
+    uv_stream_t* stream
+    llhttp_t* parser
+    OpenSSL SSL* object exposed to user code</code></pre></div>
+</section>
+</article>
+  </main>
+  <script>
+    const toggle = document.querySelector('.mobile-docs-toggle');
+    const backdrop = document.querySelector('.sidebar-backdrop');
+    function closeSidebar() { document.body.classList.remove('sidebar-open'); toggle?.setAttribute('aria-expanded', 'false'); backdrop?.setAttribute('hidden', ''); }
+    toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('sidebar-open'); toggle.setAttribute('aria-expanded', String(open)); if (open) backdrop?.removeAttribute('hidden'); else backdrop?.setAttribute('hidden', ''); });
+    backdrop?.addEventListener('click', closeSidebar);
+  </script>
+</body>
+</html>

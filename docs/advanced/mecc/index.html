@@ -3,148 +3,98 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MECC Memory Model Direction · Clyth Documentation</title>
-  <meta name="description" content="Clyth documentation: MECC Memory Model Direction">
+  <title>MECC Direction · Clyth Documentation</title>
+  <meta name="description" content="Clyth 0.5.0 documentation: MECC Direction">
   <link rel="stylesheet" href="../../../assets/css/site.css">
 </head>
 <body>
   <header class="site-header">
     <nav class="nav">
-      <a class="brand" href="../../../">
-        <span class="brand-mark">C</span>
-        <span>Clyth</span>
-      </a>
+      <a class="brand" href="../../../"><span class="brand-mark">C</span><span>Clyth</span></a>
       <div class="nav-links">
         <a href="../../../docs/overview/">Docs</a>
-        <a href="../../../docs/basics/">Basics</a>
+        <a href="../../../docs/language/">Language</a>
         <a href="../../../docs/runtime/">Runtime</a>
         <a href="../../../docs/tooling/">Tooling</a>
         <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
       </div>
     </nav>
   </header>
-
   <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
   <div class="sidebar-backdrop" hidden></div>
-
   <main class="docs-shell">
     <aside class="sidebar" aria-label="Documentation navigation">
 <p class="sidebar-title">Clyth Docs</p>
 <div class="sidebar-group">
-<h4>Overview</h4>
+<h4>Project</h4>
 <a class="" href="../../../docs/overview/">Overview</a>
 <a class="" href="../../../docs/getting-started/">Getting Started</a>
-<a class="" href="../../../docs/overview/why-clyth/">Why Clyth Exists</a>
 <a class="" href="../../../docs/overview/current-status/">Current Status</a>
-<a class="" href="../../../docs/overview/design-boundary/">Design Boundary</a>
 <a class="" href="../../../docs/overview/roadmap/">Roadmap</a>
-<a class="" href="../../../docs/overview/ai-assisted-development/">AI-Assisted Development</a>
-<a class="" href="../../../docs/overview/legal-notes/">Legal Notes</a>
+<a class="" href="../../../docs/overview/why-clyth/">Why Clyth</a>
 </div>
 <div class="sidebar-group">
-<h4>Basics</h4>
+<h4>Language</h4>
 <a class="" href="../../../docs/basics/">Basics</a>
-<a class="" href="../../../docs/language/">Language Guide</a>
 <a class="" href="../../../docs/basics/hello-world/">Hello World</a>
-<a class="" href="../../../docs/basics/command-line-arguments/">Command-Line Arguments</a>
-<a class="" href="../../../docs/basics/arrays/">Arrays</a>
-<a class="" href="../../../docs/basics/strings/">Strings</a>
+<a class="" href="../../../docs/language/">Language Guide</a>
+<a class="" href="../../../docs/advanced/structs-this/">Structs & Methods</a>
+<a class="" href="../../../docs/advanced/collections/">Collections</a>
+<a class="active" href="../../../docs/advanced/mecc/">MECC</a>
 </div>
 <div class="sidebar-group">
-<h4>Advanced Language</h4>
-<a class="" href="../../../docs/advanced/">Advanced Language</a>
-<a class="" href="../../../docs/advanced/structs-this/">Structs, Constructors, Methods, and this</a>
-<a class="" href="../../../docs/advanced/collections/">Runtime Collections</a>
-<a class="" href="../../../docs/advanced/maps-keyed-arrays/">Maps and Keyed Arrays</a>
-<a class="" href="../../../docs/advanced/generic-instantiation/">Generic Runtime Instantiation</a>
-<a class="active" href="../../../docs/advanced/mecc/">MECC Direction</a>
-</div>
-<div class="sidebar-group">
-<h4>Runtime &amp; Modules</h4>
+<h4>Runtime</h4>
 <a class="" href="../../../docs/runtime/">Runtime Overview</a>
+<a class="" href="../../../docs/runtime/abi-policy/">ABI Policy</a>
 <a class="" href="../../../docs/modules/">Modules</a>
-<a class="" href="../../../docs/runtime/package-includes/">Package Includes</a>
-<a class="" href="../../../docs/runtime/abi-policy/">Runtime ABI Policy</a>
 <a class="" href="../../../docs/runtime/module-metadata/">Module Metadata</a>
-<a class="" href="../../../docs/runtime/dma/">DMA Runtime Module</a>
-<a class="" href="../../../docs/runtime/json-web-tls/">JSON, Web, and TLS</a>
+<a class="" href="../../../docs/runtime/json-web-tls/">JSON/Web/TLS</a>
 </div>
 <div class="sidebar-group">
-<h4>0.5 Runtime Targets</h4>
-<a class="" href="../../../docs/standard-library/">Standard Library Direction</a>
+<h4>Standard Library</h4>
 <a class="" href="../../../docs/standard-library/file-io/">File I/O</a>
-<a class="" href="../../../docs/standard-library/networking/">Networking</a>
-<a class="" href="../../../docs/standard-library/math/">Math</a>
 <a class="" href="../../../docs/standard-library/json/">JSON</a>
 <a class="" href="../../../docs/standard-library/hash/">Hashing</a>
+<a class="" href="../../../docs/standard-library/networking/">Networking</a>
 </div>
 <div class="sidebar-group">
-<h4>Tooling &amp; Distribution</h4>
-<a class="" href="../../../docs/tooling/">Tooling Overview</a>
+<h4>Tooling</h4>
+<a class="" href="../../../docs/tooling/">Tooling</a>
 <a class="" href="../../../docs/tooling/building/">Building</a>
 <a class="" href="../../../docs/tooling/testing/">Testing</a>
-<a class="" href="../../../docs/tooling/regression-suite/">Regression Suite</a>
 <a class="" href="../../../docs/tooling/distribution/">Distribution</a>
-<a class="" href="../../../docs/tooling/future-cli/">Future CLI</a>
 <a class="" href="../../../docs/tooling/package-safety/">Package Safety</a>
 </div>
-</aside>
-    <article class="doc-page">
-      <span class="breadcrumb">Advanced Language</span>
-      <h1>MECC Memory Model Direction</h1>
-      <p>MECC means <strong>Managed Entanglement for Collapsible Collections</strong>.</p>
-<p>MECC is Clyth's planned deterministic memory-management model. Rather than tracing the whole heap or reference-counting every object individually, MECC groups related allocations into estates and manages lifetime at the estate level.</p>
-<h2>Current design direction</h2>
-<ul>
-  <li><code>new Type()</code> is the normal construction/allocation gateway.</li>
-  <li><code>estate.new(Type())</code> explicitly allocates into a specific estate.</li>
-  <li>Strong/weak estate relationships are compile-time graph metadata.</li>
-  <li>Strong cycles may be rejected or coalesced into shared lifetime groups when safe.</li>
-  <li><code>malloc</code>, <code>free</code>, and lower-level allocation details are runtime implementation details unless intentionally exposed through low-level modules.</li>
-</ul>
-<p>MECC is not fully implemented yet. Alpha 0.4.0 focuses on stabilizing the runtime/module architecture that MECC will eventually use.</p>
-    </article>
+    </aside>
+    <article class="doc-page"><span class="breadcrumb">Advanced</span>
+<h1>MECC Direction</h1>
+<p class="lead">MECC is planned after the compiler is simplified and bootstrapping work begins.</p>
+<section class="doc-split"><div class="doc-split-text"><h2>Why wait</h2><p>MECC should analyze real Clyth programs, not toy examples. 0.5.0 creates those patterns through requests, responses, files, strings, collections, and callbacks.</p></div><div class="doc-split-code"><pre><code>Future:
+  ownership regions
+  cleanup estates
+  conservative fallback
+  deterministic lifetime lowering</code></pre></div></section>    </article>
   </main>
-
-  <footer class="site-footer">
-    <p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p>
-  </footer>
-
+  <footer class="site-footer"><p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p></footer>
   <script id="clyth-docs-drawer-script">
     (function () {
       const button = document.querySelector('.mobile-docs-toggle');
       const backdrop = document.querySelector('.sidebar-backdrop');
       const sidebar = document.querySelector('.sidebar');
-
       if (!button || !backdrop || !sidebar) return;
-
-      function setOpen(open) {
-        document.body.classList.toggle('sidebar-open', open);
-        button.setAttribute('aria-expanded', open ? 'true' : 'false');
-        backdrop.hidden = !open;
-      }
-
-      button.addEventListener('click', function () {
-        setOpen(!document.body.classList.contains('sidebar-open'));
-      });
-
-      backdrop.addEventListener('click', function () {
-        setOpen(false);
-      });
-
-      sidebar.addEventListener('click', function (event) {
-        if (event.target.closest('a')) {
-          setOpen(false);
-        }
-      });
-
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-          setOpen(false);
-        }
-      });
+      const scroll_key = 'clyth-sidebar-scroll:' + window.location.pathname;
+      const global_scroll_key = 'clyth-sidebar-scroll:global';
+      const saved_scroll = localStorage.getItem(scroll_key) || localStorage.getItem(global_scroll_key);
+      if (saved_scroll !== null) sidebar.scrollTop = Number(saved_scroll);
+      function persist_sidebar_scroll() { localStorage.setItem(scroll_key, String(sidebar.scrollTop)); localStorage.setItem(global_scroll_key, String(sidebar.scrollTop)); }
+      sidebar.addEventListener('scroll', persist_sidebar_scroll, { passive: true });
+      window.addEventListener('beforeunload', persist_sidebar_scroll);
+      function setOpen(open) { document.body.classList.toggle('sidebar-open', open); button.setAttribute('aria-expanded', open ? 'true' : 'false'); backdrop.hidden = !open; }
+      button.addEventListener('click', function () { setOpen(!document.body.classList.contains('sidebar-open')); });
+      backdrop.addEventListener('click', function () { setOpen(false); });
+      sidebar.addEventListener('click', function (event) { if (event.target.closest('a')) { persist_sidebar_scroll(); setOpen(false); } });
+      document.addEventListener('keydown', function (event) { if (event.key === 'Escape') setOpen(false); });
     })();
   </script>
-
 </body>
 </html>
