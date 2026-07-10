@@ -1,15 +1,5 @@
-# Clyth Docs Starter
+# Clyth documentation navigation consistency patch
 
-A starter GitHub Pages template for the Clyth documentation site.
+Every rendered page now uses the same top navigation labels and destinations: Docs, Language, Runtime, Modules, and MECC. The redirect-only `docs/index.html` remains intentionally headerless.
 
-Recommended GitHub Pages settings:
-
-- Source: Deploy from branch
-- Branch: `main`
-- Folder: `/root`
-
-The documentation content is licensed under CC BY 4.0. Code examples are MIT unless otherwise specified.
-
-## Layout note
-
-This static site is hosted from the repository root and includes a responsive documentation sidebar.
+The canonical sidebar and the expanded reference-page layouts are preserved.
