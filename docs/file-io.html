@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>File I/O · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header>
+<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
+<p class="sidebar-title">Clyth Docs</p>
+<details open data-sidebar-group="project"><summary>Project</summary>
+<a href="overview.html">Overview</a>
+<a href="getting-started.html">Getting Started</a>
+<a href="roadmap.html">Roadmap</a>
+</details>
+<details open data-sidebar-group="language"><summary>Language</summary>
+<a href="basics.html">Basics</a>
+<a href="types.html">Types</a>
+<a href="strings.html">Strings & Chars</a>
+<a href="functions.html">Functions</a>
+<a href="structs.html">Structs</a>
+<a href="collections.html">Collections</a>
+<a href="ownership.html">Ownership</a>
+<a href="mecc.html">MECC</a>
+</details>
+<details open data-sidebar-group="runtime"><summary>Runtime</summary>
+<a href="runtime.html">Runtime Architecture</a>
+<a href="abi.html">ABI Boundary</a>
+<a href="modules.html">Modules</a>
+</details>
+<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
+<a class="active" href="file-io.html">File I/O</a>
+<a href="json.html">JSON</a>
+<a href="hashing.html">Hashing</a>
+<a href="https.html">HTTPS Server</a>
+<a href="standard-library.html">Standard Library Index</a>
+</details>
+<details open data-sidebar-group="tooling"><summary>Tooling</summary>
+<a href="tooling.html">Tooling</a>
+<a href="distribution.html">Distribution</a>
+</details>
+</aside><article class="doc-content"><h1>File I/O</h1><p>The File I/O module exposes synchronous file operations through Clyth functions while routing implementation through the runtime provider. In 0.5.x this provider is libuv-backed.</p><section class="api-block"><h3>read_file</h3><div class="api-signature"><div class="doc-split-code"><pre><code>string read_file(string path)</code></pre></div></div><h4>Parameters</h4><table class="api-table"><thead><tr><th>Name</th><th>Type</th><th>Purpose</th></tr></thead><tbody><tr><td><code>path</code></td><td>string</td><td>Path to the file to read.</td></tr></tbody></table><h4>Returns</h4><p>A string containing file contents.</p><h4>Example</h4><div class="doc-split-code"><pre><code>include "file-io"
+
+string text = read_file("config.json")
+println(text)</code></pre></div></section><section class="api-block"><h3>write_file</h3><div class="api-signature"><div class="doc-split-code"><pre><code>void write_file(string path, string contents)</code></pre></div></div><h4>Parameters</h4><table class="api-table"><thead><tr><th>Name</th><th>Type</th><th>Purpose</th></tr></thead><tbody><tr><td><code>path</code></td><td>string</td><td>Destination path.</td></tr><tr><td><code>contents</code></td><td>string</td><td>Text to write.</td></tr></tbody></table><h4>Returns</h4><p>No return value. The call completes after the write operation finishes.</p><h4>Example</h4><div class="doc-split-code"><pre><code>include "file-io"
+
+write_file("out.txt", "hello from Clyth")</code></pre></div></section><section class="api-block"><h3>file_exists</h3><div class="api-signature"><div class="doc-split-code"><pre><code>bool file_exists(string path)</code></pre></div></div><h4>Parameters</h4><table class="api-table"><thead><tr><th>Name</th><th>Type</th><th>Purpose</th></tr></thead><tbody><tr><td><code>path</code></td><td>string</td><td>Filesystem path to check.</td></tr></tbody></table><h4>Returns</h4><p>true if the path exists, false otherwise.</p><h4>Example</h4><div class="doc-split-code"><pre><code>if file_exists("out.txt") {
+    println("file exists")
+}</code></pre></div></section><section class="api-block"><h3>delete_file</h3><div class="api-signature"><div class="doc-split-code"><pre><code>void delete_file(string path)</code></pre></div></div><h4>Parameters</h4><table class="api-table"><thead><tr><th>Name</th><th>Type</th><th>Purpose</th></tr></thead><tbody><tr><td><code>path</code></td><td>string</td><td>File to remove.</td></tr></tbody></table><h4>Returns</h4><p>No return value.</p><h4>Example</h4><div class="doc-split-code"><pre><code>if file_exists("out.txt") {
+    delete_file("out.txt")
+}</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>

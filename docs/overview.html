@@ -4,89 +4,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Overview · Clyth Documentation</title>
-  <meta name="description" content="Clyth 0.5.0 documentation: Overview">
+  <meta name="description" content="Clyth 0.5.0 overview">
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a>
-      <div class="nav-links">
-        <a href="overview.html">Docs</a>
-        <a href="language.html">Language</a>
-        <a href="runtime.html">Runtime</a>
-        <a href="tooling.html">Tooling</a>
-        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
-      </div>
-    </nav>
-  </header>
-  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
-  <div class="sidebar-backdrop" hidden></div>
-  <main class="docs-shell">
-    <aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
-<div class="sidebar-group">
-<h4>Project</h4>
+<header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
+<button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
+<p class="sidebar-title">Clyth Docs</p>
+<details open data-sidebar-group="project"><summary>Project</summary>
 <a class="active" href="overview.html">Overview</a>
-<a class="" href="getting-started.html">Getting Started</a>
-<a class="" href="roadmap.html">Roadmap</a>
-</div>
-<div class="sidebar-group">
-<h4>Language</h4>
-<a class="" href="language.html">Language Guide</a>
-<a class="" href="mecc.html">MECC</a>
-</div>
-<div class="sidebar-group">
-<h4>Runtime</h4>
-<a class="" href="runtime.html">Runtime Architecture</a>
-<a class="" href="modules.html">Module System</a>
-<a class="" href="standard-library.html">Standard Library</a>
-</div>
-<div class="sidebar-group">
-<h4>Tooling</h4>
-<a class="" href="tooling.html">Tooling & Build</a>
-</div></aside>
-    <article class="doc-page">
-<span class="breadcrumb">Project</span>
-<h1>Overview</h1>
-<p class="lead">Clyth 0.5.0 is the Runtime Ecosystem Foundation release. The point of this milestone is not only that Clyth can emit native executables; it is that Clyth code can compile, cross a stable ABI boundary, and drive native-backed runtime capabilities while preserving a language-level API surface.</p>
-<div class="section-index">
-  <a href="language.html"><strong>Language surface</strong><span>Structs, methods, extension methods, function values, lambdas, arrays, strings, templates, and generics.</span></a>
-  <a href="runtime.html"><strong>Runtime architecture</strong><span>How Clyth wrapper methods map onto ABI functions and native providers.</span></a>
-  <a href="modules.html"><strong>Module development</strong><span>How module.json, Clyth wrappers, and native source files compose into a linkable module.</span></a>
-</div>
-<section class="doc-split ">
-  <div class="doc-split-text">
-    <h2>What 0.5.0 establishes</h2>
-    <p>Clyth is currently an ahead-of-time compiler that lowers the supported alpha language subset through LLVM IR and links native Linux artifacts through a Zig/musl toolchain path. The 0.5.0 release candidate validates the language/runtime relationship with a browser-facing server demo, JSON request handling, libuv-backed file I/O, first-class callbacks, and recursive ABI auditing.</p><p>The important design result is a repeatable runtime pattern: Clyth owns the public API, the ABI boundary owns stability, and the native provider owns implementation detail.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>Clyth application
-    ↓
-Clyth wrapper module
-    ↓
-Stable ABI boundary
-    ↓
-Native provider
-    ↓
-libuv / yyjson / rapidhash / OS</code></pre></div>
-</section>
-<h2>0.5.0 validated capabilities</h2>
-<div class="note-grid">
-  <div class="reference-card"><strong>Language</strong><span>Structs, constructors, explicit this, extension methods, function values, lambdas, template interpolation, native strings, arrays, and generic runtime collections.</span></div>
-  <div class="reference-card"><strong>Runtime</strong><span>print/println, libuv-backed file I/O, yyjson-backed JSON, rapidhash hashing, and a unified server abstraction using Request and Response wrappers.</span></div>
-  <div class="reference-card"><strong>Build</strong><span>LLVM IR emission, Zig/musl link path, LLVM libc++ C++ ABI, and audit checks for GNU/glibc/libstdc++ leakage.</span></div>
-  <div class="reference-card"><strong>Testing</strong><span>The release candidate passes 20/20 regression samples, including web callbacks, detached methods, file I/O, function values, and runtime modules.</span></div>
-</div>
-<h2>What belongs in Clyth, and what belongs below it</h2>
-<p>Clyth should not expose every native library structure directly. A systems language still needs good boundaries. A native provider such as libuv or yyjson can be excellent at implementation while still being the wrong shape for the public language API. Clyth modules therefore wrap native capability in Clyth-facing types and methods.</p>
-<p>That boundary makes future changes possible: the HTTP stack can evolve, file I/O can gain asynchronous variants, JSON internals can be replaced or expanded, and the compiler can move toward a bootstrapped frontend without forcing user code to track native layout changes.</p>
-</article>
-  </main>
-  <script>
-    const toggle = document.querySelector('.mobile-docs-toggle');
-    const backdrop = document.querySelector('.sidebar-backdrop');
-    function closeSidebar() { document.body.classList.remove('sidebar-open'); toggle?.setAttribute('aria-expanded', 'false'); backdrop?.setAttribute('hidden', ''); }
-    toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('sidebar-open'); toggle.setAttribute('aria-expanded', String(open)); if (open) backdrop?.removeAttribute('hidden'); else backdrop?.setAttribute('hidden', ''); });
-    backdrop?.addEventListener('click', closeSidebar);
-  </script>
-</body>
-</html>
+<a href="getting-started.html">Getting Started</a>
+<a href="roadmap.html">Roadmap</a>
+</details>
+<details open data-sidebar-group="language"><summary>Language</summary>
+<a href="basics.html">Basics</a>
+<a href="types.html">Types</a>
+<a href="strings.html">Strings & Chars</a>
+<a href="functions.html">Functions</a>
+<a href="structs.html">Structs</a>
+<a href="collections.html">Collections</a>
+<a href="ownership.html">Ownership</a>
+<a href="mecc.html">MECC</a>
+</details>
+<details open data-sidebar-group="runtime"><summary>Runtime</summary>
+<a href="runtime.html">Runtime Architecture</a>
+<a href="abi.html">ABI Boundary</a>
+<a href="modules.html">Modules</a>
+</details>
+<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
+<a href="file-io.html">File I/O</a>
+<a href="json.html">JSON</a>
+<a href="hashing.html">Hashing</a>
+<a href="https.html">HTTPS Server</a>
+<a href="standard-library.html">Standard Library Index</a>
+</details>
+<details open data-sidebar-group="tooling"><summary>Tooling</summary>
+<a href="tooling.html">Tooling</a>
+<a href="distribution.html">Distribution</a>
+</details>
+</aside><article class="doc-page"><span class="breadcrumb">Clyth 0.5.0</span><h1>Overview</h1><p class="lead">Clyth 0.5.0 is the Runtime Ecosystem Foundation release. It proves that Clyth code can compile to native executables, cross a stable ABI boundary, and drive useful native-backed runtime capabilities.</p><div class="section-index"><a href="language.html"><strong>Language</strong><span>Alpha syntax and semantics.</span></a><a href="runtime.html"><strong>Runtime</strong><span>ABI and native provider architecture.</span></a><a href="modules.html"><strong>Modules</strong><span>How module wrappers, metadata, and native bindings fit together.</span></a></div><div class="doc-split wide"><div class="doc-split-text"><h2>Current compiler path</h2><p>The current bootstrap compiler lowers the supported language subset through LLVM IR generation. LLVM remains visible because it is the mature optimization and native-code backend used by this release, but Clyth's language model is not intended to be permanently coupled to LLVM's C++ APIs.</p></div><div class="doc-split-code"><pre><code>Clyth source
+  ↓
+ANTLR frontend in the bootstrap compiler
+  ↓
+AST + semantic analysis
+  ↓
+LLVM IR generation
+  ↓
+Zig/musl/libc++ link path
+  ↓
+native Linux executable</code></pre></div></div><h2>0.5.0 validation</h2><ul><li>20+ regression samples covering structs, strings, functions, lambdas, modules, JSON, hashing, file I/O, and HTTPS routing.</li><li>A recursive ABI audit that rejects accidental GNU/glibc/libstdc++ runtime leakage.</li><li>A browser-facing demo where Clyth serves a page and accepts JSON POST payloads through a libuv-backed event loop.</li></ul></article></main>
+<footer class="site-footer">Clyth documentation is written for the 0.5.0 Runtime Ecosystem Foundation release.</footer>
+<script src="../assets/js/sidebar.js"></script>
+</body></html>

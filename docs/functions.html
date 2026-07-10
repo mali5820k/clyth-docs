@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Functions · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header>
+<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
+<p class="sidebar-title">Clyth Docs</p>
+<details open data-sidebar-group="project"><summary>Project</summary>
+<a href="overview.html">Overview</a>
+<a href="getting-started.html">Getting Started</a>
+<a href="roadmap.html">Roadmap</a>
+</details>
+<details open data-sidebar-group="language"><summary>Language</summary>
+<a href="basics.html">Basics</a>
+<a href="types.html">Types</a>
+<a href="strings.html">Strings & Chars</a>
+<a class="active" href="functions.html">Functions</a>
+<a href="structs.html">Structs</a>
+<a href="collections.html">Collections</a>
+<a href="ownership.html">Ownership</a>
+<a href="mecc.html">MECC</a>
+</details>
+<details open data-sidebar-group="runtime"><summary>Runtime</summary>
+<a href="runtime.html">Runtime Architecture</a>
+<a href="abi.html">ABI Boundary</a>
+<a href="modules.html">Modules</a>
+</details>
+<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
+<a href="file-io.html">File I/O</a>
+<a href="json.html">JSON</a>
+<a href="hashing.html">Hashing</a>
+<a href="https.html">HTTPS Server</a>
+<a href="standard-library.html">Standard Library Index</a>
+</details>
+<details open data-sidebar-group="tooling"><summary>Tooling</summary>
+<a href="tooling.html">Tooling</a>
+<a href="distribution.html">Distribution</a>
+</details>
+</aside><article class="doc-content"><h1>Functions, Callbacks, and Lambdas</h1><p>Clyth functions support ordinary declarations, first-class function values, and lambda callbacks. The canonical function type syntax is <code>function&lt;Return(Args...)&gt;</code>.</p><section class="doc-split"><div><h2>Ordinary functions</h2><p>Functions declare their return type and parameter list explicitly.</p></div><div class="doc-split-code"><pre><code>int32 add(int32 left, int32 right) {
+    return left + right
+}</code></pre></div></section><section class="doc-split"><div><h2>First-class functions</h2><p>Function values can be passed to other functions using <code>function&lt;Return(Args...)&gt;</code>.</p></div><div class="doc-split-code"><pre><code>int32 run(function&lt;int32(int32)&gt; callback) {
+    return callback(5)
+}
+
+int32 square(int32 value) {
+    return value * value
+}</code></pre></div></section><section class="doc-split"><div><h2>Lambda callbacks</h2><p>When a lambda omits an explicit return type, no return statements infer <code>void</code>. Return statements with values infer the returned type if all return paths agree.</p></div><div class="doc-split-code"><pre><code>router.post("/", (Request request, Response response) =&gt; {
+    response.send(200, request.body())
+})
+
+function&lt;int32(int32)&gt; doubler = (value) =&gt; {
+    return value * 2
+}</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>

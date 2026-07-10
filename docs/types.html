@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Types · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header>
+<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
+<p class="sidebar-title">Clyth Docs</p>
+<details open data-sidebar-group="project"><summary>Project</summary>
+<a href="overview.html">Overview</a>
+<a href="getting-started.html">Getting Started</a>
+<a href="roadmap.html">Roadmap</a>
+</details>
+<details open data-sidebar-group="language"><summary>Language</summary>
+<a href="basics.html">Basics</a>
+<a class="active" href="types.html">Types</a>
+<a href="strings.html">Strings & Chars</a>
+<a href="functions.html">Functions</a>
+<a href="structs.html">Structs</a>
+<a href="collections.html">Collections</a>
+<a href="ownership.html">Ownership</a>
+<a href="mecc.html">MECC</a>
+</details>
+<details open data-sidebar-group="runtime"><summary>Runtime</summary>
+<a href="runtime.html">Runtime Architecture</a>
+<a href="abi.html">ABI Boundary</a>
+<a href="modules.html">Modules</a>
+</details>
+<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
+<a href="file-io.html">File I/O</a>
+<a href="json.html">JSON</a>
+<a href="hashing.html">Hashing</a>
+<a href="https.html">HTTPS Server</a>
+<a href="standard-library.html">Standard Library Index</a>
+</details>
+<details open data-sidebar-group="tooling"><summary>Tooling</summary>
+<a href="tooling.html">Tooling</a>
+<a href="distribution.html">Distribution</a>
+</details>
+</aside><article class="doc-content"><h1>Types</h1><p>Clyth uses explicit primitive widths so systems code can state the storage and arithmetic behavior it expects. Numeric overflow and underflow follow the selected integer width; the docs show those boundaries because they are part of the language surface, not an incidental backend detail.</p><section class="doc-split"><div><h2>Primitive integer widths</h2><p>Signed and unsigned integer types are distinct. Use the smallest type that accurately represents the value range, especially in ABI-facing code where field width matters.</p></div><div class="doc-split-code"><pre><code>int8   a = -128
+uint8  b = 255
+int16  c = -32768
+uint16 d = 65535
+int32  e = 2147483647
+uint32 f = 4294967295
+int64  g = 9223372036854775807
+uint64 h = 18446744073709551615</code></pre></div></section><section class="doc-split"><div><h2>Overflow and underflow</h2><p>Variables of distinct sizes overflow or underflow as expected when arithmetic exceeds the representable range of that type. These examples are useful regression targets because they make fixed-width behavior visible.</p></div><div class="doc-split-code"><pre><code>uint8 max = 255
+uint8 wrapped = max + 1
+// wrapped == 0
+
+uint8 zero = 0
+uint8 under = zero - 1
+// under == 255</code></pre></div></section><section class="doc-split"><div><h2>Characters and booleans</h2><p><code>char</code> is the scalar character/code-unit type used by fixed character arrays and string conversion APIs. <code>bool</code> is used for branch conditions and API results.</p></div><div class="doc-split-code"><pre><code>char letter = 'C'
+bool ok = true
+
+if ok {
+    println(`letter = ${letter}`)
+}</code></pre></div></section><section class="doc-split"><div><h2>Null values</h2><p><code>null</code> represents absence for nullable-capable values such as dynamic arrays, collections, and opaque runtime resources. It is not a valid value for numeric primitives.</p></div><div class="doc-split-code"><pre><code>JsonDocument document = null
+
+if document != null {
+    println(document.to_string())
+}
+
+// int32 count = null  // semantic error</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>

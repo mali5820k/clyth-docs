@@ -1,200 +1,56 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Module System · Clyth Documentation</title>
-  <meta name="description" content="Clyth 0.5.0 documentation: Module System">
-  <link rel="stylesheet" href="../assets/css/site.css">
-</head>
-<body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a>
-      <div class="nav-links">
-        <a href="overview.html">Docs</a>
-        <a href="language.html">Language</a>
-        <a href="runtime.html">Runtime</a>
-        <a href="tooling.html">Tooling</a>
-        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
-      </div>
-    </nav>
-  </header>
-  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
-  <div class="sidebar-backdrop" hidden></div>
-  <main class="docs-shell">
-    <aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
-<div class="sidebar-group">
-<h4>Project</h4>
-<a class="" href="overview.html">Overview</a>
-<a class="" href="getting-started.html">Getting Started</a>
-<a class="" href="roadmap.html">Roadmap</a>
-</div>
-<div class="sidebar-group">
-<h4>Language</h4>
-<a class="" href="language.html">Language Guide</a>
-<a class="" href="mecc.html">MECC</a>
-</div>
-<div class="sidebar-group">
-<h4>Runtime</h4>
-<a class="" href="runtime.html">Runtime Architecture</a>
-<a class="active" href="modules.html">Module System</a>
-<a class="" href="standard-library.html">Standard Library</a>
-</div>
-<div class="sidebar-group">
-<h4>Tooling</h4>
-<a class="" href="tooling.html">Tooling & Build</a>
-</div></aside>
-    <article class="doc-page">
-<span class="breadcrumb">Runtime</span>
-<h1>Module System</h1>
-<p class="lead">A Clyth module is the unit that connects user-facing source code to optional native implementation. The wrapper gives developers a Clyth API. The native binding supplies the implementation. Metadata tells the compiler and build scripts how to link the pieces together.</p>
-<div class="section-index">
-  <a href="#layout"><strong>Module layout</strong><span>How wrapper files, native sources, headers, and metadata fit together.</span></a>
-  <a href="#metadata"><strong>module.json</strong><span>What the metadata file is for and how the compiler discovers link artifacts.</span></a>
-  <a href="#authoring"><strong>Authoring modules</strong><span>How to make a new native-backed module without leaking native layout.</span></a>
-</div>
-<h2 id="layout">Module layout</h2>
-<p>The current repository keeps runtime material under <code>clyth-runtime/</code>. The exact packaging will continue improving, but the architecture is already visible: wrapper modules live as Clyth source, native bindings live in C or C-compatible code, and module metadata describes how to build and link them.</p>
-<div class="module-map"><pre><code>clyth-runtime/
-├── modules/
-│   ├── module-file-io/
-│   │   ├── file-io.clyth          # Clyth wrapper API
-│   │   └── module.json            # module metadata
-│   ├── module-json/
-│   │   ├── json.clyth
-│   │   └── module.json
-│   ├── module-hash/
-│   │   ├── hash.clyth
-│   │   └── module.json
-│   └── module-https/
-│       ├── https.clyth
-│       └── module.json
-│
-├── c-bindings/
-│   ├── file-io/                   # libuv-backed implementation
-│   ├── http/                      # libuv + llhttp server core
-│   ├── json/                      # yyjson bridge
-│   └── hash/                      # rapidhash bridge
-│
-└── runtime_libraries.json          # runtime library discovery / linking map</code></pre></div>
-<section class="doc-split ">
-  <div class="doc-split-text">
-    <h2>Wrapper file responsibilities</h2>
-    <p>The wrapper is what Clyth users read and import. It declares Clyth structs, methods, and extern ABI calls. It should hide provider details and expose names that make sense inside Clyth.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>include &quot;https&quot;
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Modules · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header>
+<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
+<p class="sidebar-title">Clyth Docs</p>
+<details open data-sidebar-group="project"><summary>Project</summary>
+<a href="overview.html">Overview</a>
+<a href="getting-started.html">Getting Started</a>
+<a href="roadmap.html">Roadmap</a>
+</details>
+<details open data-sidebar-group="language"><summary>Language</summary>
+<a href="basics.html">Basics</a>
+<a href="types.html">Types</a>
+<a href="strings.html">Strings & Chars</a>
+<a href="functions.html">Functions</a>
+<a href="structs.html">Structs</a>
+<a href="collections.html">Collections</a>
+<a href="ownership.html">Ownership</a>
+<a href="mecc.html">MECC</a>
+</details>
+<details open data-sidebar-group="runtime"><summary>Runtime</summary>
+<a href="runtime.html">Runtime Architecture</a>
+<a href="abi.html">ABI Boundary</a>
+<a class="active" href="modules.html">Modules</a>
+</details>
+<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
+<a href="file-io.html">File I/O</a>
+<a href="json.html">JSON</a>
+<a href="hashing.html">Hashing</a>
+<a href="https.html">HTTPS Server</a>
+<a href="standard-library.html">Standard Library Index</a>
+</details>
+<details open data-sidebar-group="tooling"><summary>Tooling</summary>
+<a href="tooling.html">Tooling</a>
+<a href="distribution.html">Distribution</a>
+</details>
+</aside><article class="doc-content"><h1>Modules</h1><p>A module is the unit that connects Clyth source wrappers, native ABI bindings, metadata, and license obligations.</p><section class="doc-split"><div><h2>module.json</h2><p><code>module.json</code> describes the module name, source files, native archives, and dependency surface. The compiler/build layer uses this metadata to decide which wrappers and archives to include.</p></div><div class="doc-split-code"><pre><code>{
+  "name": "module-json",
+  "sources": ["json.clyth"],
+  "native_archives": ["x86_64/libclyth_json.a"],
+  "license": "MIT"
+}</code></pre></div></section><section class="doc-split"><div><h2>Wrapper layer</h2><p>The wrapper layer is ordinary Clyth source. It defines structs, methods, and functions that application code uses.</p></div><div class="doc-split-code"><pre><code>extern C JsonDocument json_parse(string text)
 
-struct Response {
-    private int64 native_handle
-}
+struct JSON {}
 
-void Response.send(int32 status, string payload) {
-    clyth_https_response_send(this.native_handle, status, payload)
-}</code></pre></div>
-</section>
-<section class="doc-split wide">
-  <div class="doc-split-text">
-    <h2>Native binding responsibilities</h2>
-    <p>The native provider owns integration with C libraries. For 0.5.0 this includes libuv for event-loop and file I/O behavior, llhttp for HTTP parsing, yyjson for JSON, and rapidhash for hashing. The provider implements the ABI declared by the wrapper.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>// native implementation sketch
-void clyth_https_response_send(
-    int64_t response_handle,
-    int32_t status,
-    clyth_string payload
-) {
-    response_state* response = lookup_response(response_handle);
-    write_http_response(response, status, payload.data, payload.length);
-}</code></pre></div>
-</section>
-<h2 id="metadata">module.json</h2>
-<p><code>module.json</code> describes how a module is built and linked. It is the bridge between the source-level <code>include</code> statement and the native archives that must be passed into the final link command.</p>
-<section class="doc-split wide">
-  <div class="doc-split-text">
-    <h2>Metadata purpose</h2>
-    <p>The compiler does not need to know what libuv is. It needs to know that including <code>https</code> requires the Clyth wrapper and the native archive produced for that module. Metadata keeps that knowledge outside the language grammar.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>{
-  &quot;name&quot;: &quot;https&quot;,
-  &quot;kind&quot;: &quot;native-backed-module&quot;,
-  &quot;wrapper&quot;: &quot;https.clyth&quot;,
-  &quot;build&quot;: {
-    &quot;sources&quot;: [
-      &quot;../../c-bindings/http/http.c&quot;,
-      &quot;../../c-bindings/libuv/vendor/libuv/src/unix/core.c&quot;
-    ],
-    &quot;include_dirs&quot;: [
-      &quot;../../c-bindings/http/include&quot;,
-      &quot;../../c-bindings/libuv/vendor/libuv/include&quot;
-    ],
-    &quot;c_flags&quot;: [&quot;-D_GNU_SOURCE&quot;, &quot;-D_FILE_OFFSET_BITS=64&quot;],
-    &quot;output&quot;: &quot;libclyth_https.a&quot;
-  },
-  &quot;licenses&quot;: [&quot;MIT&quot;, &quot;BSD-2-Clause&quot;]
-}</code></pre></div>
-</section>
-<h2>How the compiler knows what to bundle</h2>
-<ol class="flow-list">
-  <li>The source file says <code>include "https"</code>.</li>
-  <li>The compiler resolves the module name against runtime module metadata.</li>
-  <li>The wrapper source contributes declarations and Clyth methods.</li>
-  <li>The module's native archive is added to the link command.</li>
-  <li>The final executable contains the user's generated code plus the required runtime module code.</li>
-</ol>
-<h2 id="authoring">Creating a custom native-backed module</h2>
-<section class="doc-split ">
-  <div class="doc-split-text">
-    <h2>Example module skeleton</h2>
-    <p>A new module should expose Clyth-friendly types and keep native structs under the provider. Handles are the common pattern when native state needs to survive across calls.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>module-image/
-├── image.clyth
+JsonDocument JSON.parse(string text) {
+    return json_parse(text)
+}</code></pre></div></section><section class="doc-split"><div><h2>Native provider</h2><p>The native provider implements the ABI functions and owns native layout. It may call libuv, yyjson, rapidhash, OpenSSL, or another permissively licensed library.</p></div><div class="doc-split-code"><pre><code>// json_bindings.c
+JsonDocument json_parse(clyth_string text) {
+    // yyjson implementation details remain here
+}</code></pre></div></section><section class="doc-split"><div><h2>Writing your own module</h2><p>Start with a Clyth wrapper and a narrow ABI. Expose Clyth objects and methods, not native memory layouts. Use <code>Handle&lt;T&gt;</code> or <code>OwnedHandle&lt;T&gt;</code> when native state must cross the boundary.</p></div><div class="doc-split-code"><pre><code>module-image/
 ├── module.json
+├── image.clyth
 └── native/
     ├── image_abi.h
-    └── image_abi.c</code></pre></div>
-</section>
-<section class="doc-split wide">
-  <div class="doc-split-text">
-    <h2>Custom wrapper example</h2>
-    <p>The Clyth wrapper declares the ABI calls and then wraps them in methods. Users import <code>image</code> and work with <code>Image</code>, not with the decoder library internals.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>extern C int64 clyth_image_open(string path)
-extern C int32 clyth_image_width(int64 handle)
-extern C int32 clyth_image_height(int64 handle)
-extern C void clyth_image_close(int64 handle)
-
-struct Image {
-    private int64 handle
-
-    Image(string path) {
-        this.handle = clyth_image_open(path)
-    }
-}
-
-int32 Image.width() {
-    return clyth_image_width(this.handle)
-}
-
-int32 Image.height() {
-    return clyth_image_height(this.handle)
-}
-
-void Image.close() {
-    clyth_image_close(this.handle)
-}</code></pre></div>
-</section>
-<h2>Licensing expectations</h2>
-<p>Clyth prefers permissively licensed dependencies for statically distributed artifacts: MIT, BSD-2-Clause, BSD-3-Clause, Zlib, and Apache-2.0 when explicitly tracked. GPL, LGPL, and AGPL dependencies complicate static distribution and should be avoided unless a future release deliberately documents that tradeoff.</p>
-</article>
-  </main>
-  <script>
-    const toggle = document.querySelector('.mobile-docs-toggle');
-    const backdrop = document.querySelector('.sidebar-backdrop');
-    function closeSidebar() { document.body.classList.remove('sidebar-open'); toggle?.setAttribute('aria-expanded', 'false'); backdrop?.setAttribute('hidden', ''); }
-    toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('sidebar-open'); toggle.setAttribute('aria-expanded', String(open)); if (open) backdrop?.removeAttribute('hidden'); else backdrop?.setAttribute('hidden', ''); });
-    backdrop?.addEventListener('click', closeSidebar);
-  </script>
-</body>
-</html>
+    └── image_abi.c</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>

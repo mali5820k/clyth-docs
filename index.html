@@ -1,72 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clyth Documentation</title>
-  <meta name="description" content="Documentation for Clyth 0.5.0, an LLVM-backed ahead-of-time systems language and runtime ecosystem foundation.">
-  <link rel="stylesheet" href="assets/css/site.css">
-</head>
-<body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="./"><span class="brand-mark">C</span><span>Clyth</span></a>
-      <div class="nav-links">
-        <a href="docs/overview.html">Docs</a>
-        <a href="docs/language.html">Language</a>
-        <a href="docs/runtime.html">Runtime</a>
-        <a href="docs/tooling.html">Tooling</a>
-        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
-      </div>
-    </nav>
-  </header>
-  <main class="home">
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Clyth 0.5.0 · Runtime Ecosystem Foundation</p>
-        <h1>Systems programming with a clear runtime boundary.</h1>
-        <p class="lead">Clyth is an LLVM-backed ahead-of-time systems language project focused on native Linux artifacts, explicit language semantics, and a runtime model where Clyth wrappers call through small auditable ABI layers into native providers such as libuv, yyjson, and rapidhash.</p>
-        <div class="badge-row"><span class="badge">LLVM IR backend</span><span class="badge">musl libc</span><span class="badge">LLVM libc++</span><span class="badge">stable ABI handles</span></div>
-        <div class="hero-actions"><a class="button primary" href="docs/overview.html">Read the docs</a><a class="button secondary" href="docs/modules.html">Module architecture</a></div>
-      </div>
-      <div class="hero-card">
-        <div class="code-window"><div class="window-bar"><span></span><span></span><span></span></div><pre><code>include &quot;https&quot;
-include &quot;json&quot;
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Clyth Documentation</title><link rel="stylesheet" href="assets/css/site.css"></head><body><header class="site-header"><nav class="nav"><a class="brand" href="index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="docs/overview.html">Docs</a><a href="docs/language.html">Language</a><a href="docs/runtime.html">Runtime</a><a href="docs/modules.html">Modules</a></div></nav></header><main class="home"><section class="hero"><div class="hero-copy"><p class="eyebrow">Alpha 0.5.0</p><h1>Clyth Runtime Ecosystem Foundation</h1><p class="lead">Clyth is an LLVM-backed ahead-of-time systems language project focused on explicit syntax, a stable runtime ABI boundary, and native Linux artifacts built through a musl/libc++ toolchain path.</p><div class="hero-actions"><a class="button primary" href="docs/overview.html">Read the docs</a><a class="button secondary" href="docs/runtime.html">Runtime architecture</a></div></div><div class="hero-card"><div class="code-window"><div class="window-bar"><span></span><span></span><span></span></div><pre><code>include "https"
 
-int32 main(string[] args) {
+int32 main() {
     Router router = Router()
 
-    router.get(&quot;/&quot;, (Request request, Response response) =&gt; {
-        response.send(200, render_home_page())
+    router.post("/api/message", (Request request, Response response) => {
+        response.send(200, `received: ${request.body()}`)
     })
 
-    router.post(&quot;/api/message&quot;, (Request request, Response response) =&gt; {
-        println(`received body: ${request.body()}`)
-        response.send(200, JSON.stringify({ &quot;received&quot;: true }))
-    })
-
-    ServerConfiguration configuration = ServerConfiguration(9090, router)
-    Server server = Server(configuration)
+    ServerConfiguration config = ServerConfiguration(9090, router)
+    Server server = Server(config)
     server.start()
-
     return 0
-}</code></pre></div>
-      </div>
-    </section>
-    <section class="principles">
-      <article><h2>Compiler-owned semantics</h2><p>Clyth owns syntax, typing, semantic analysis, and lowering. LLVM is used as a mature backend, not as the identity of the language.</p></article>
-      <article><h2>Native capability through wrappers</h2><p>Runtime features are exposed as Clyth APIs while implementation details stay below a stable ABI boundary.</p></article>
-      <article><h2>Auditable artifacts</h2><p>The 0.5.0 release candidate validates native artifacts through musl/libc++ builds and recursive GNU/glibc/libstdc++ audit checks.</p></article>
-    </section>
-    <section class="docs-grid">
-      <h2>Documentation paths</h2>
-      <div class="grid">
-        <a class="doc-card" href="docs/language.html"><h3>Language</h3><p>Variables, structs, arrays, generics, functions, lambdas, extension methods, and template interpolation.</p></a>
-        <a class="doc-card" href="docs/runtime.html"><h3>Runtime Architecture</h3><p>Wrapper layers, handles, ABI boundaries, and how Clyth calls native-backed functionality.</p></a>
-        <a class="doc-card" href="docs/modules.html"><h3>Modules</h3><p>Module layout, module.json, native binding layers, build integration, and custom module authoring.</p></a>
-        <a class="doc-card" href="docs/standard-library.html"><h3>Standard Library</h3><p>File I/O, JSON, hashing, collections, server APIs, and exported methods with parameters and return types.</p></a>
-      </div>
-    </section>
-  </main>
-</body>
-</html>
+}</code></pre></div></div></section><section class="docs-grid"><h2>Documentation</h2><div class="grid"><a class="doc-card" href="docs/language.html"><h3>Language</h3><p>Variables, arrays, structs, extension methods, functions, lambdas, templates, and generics.</p></a><a class="doc-card" href="docs/runtime.html"><h3>Runtime</h3><p>The wrapper → ABI → native provider model that keeps Clyth APIs stable.</p></a><a class="doc-card" href="docs/modules.html"><h3>Modules</h3><p>How Clyth modules are laid out, built, linked, and documented.</p></a><a class="doc-card" href="docs/mecc.html"><h3>MECC</h3><p>Managed Entanglement for Collapsible Collections and the ownership path beyond 0.5.0.</p></a></div></section></main><footer class="site-footer">Clyth 0.5.0 documentation.</footer></body></html>

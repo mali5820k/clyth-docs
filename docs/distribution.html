@@ -1,30 +1,49 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Distribution · Clyth Documentation</title><meta name="description" content="Clyth 0.5.0 documentation: Distribution"><link rel="stylesheet" href="../assets/css/site.css"></head><body><header class="site-header"><nav class="nav"><a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="tooling.html">Tooling</a><a href="https://github.com/mali5820k/Cobralyth">GitHub</a></div></nav></header><main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
-<div class="sidebar-group"><h4>Project</h4>
-<a class="" href="overview.html">Overview</a>
-<a class="" href="getting-started.html">Getting Started</a>
-<a class="" href="roadmap.html">Roadmap</a>
-</div>
-<div class="sidebar-group"><h4>Language</h4>
-<a class="" href="basics.html">Basics</a>
-<a class="" href="language.html">Language Guide</a>
-<a class="" href="advanced.html">Advanced</a>
-</div>
-<div class="sidebar-group"><h4>Runtime</h4>
-<a class="" href="runtime.html">Runtime Architecture</a>
-<a class="" href="modules.html">Modules</a>
-<a class="" href="standard-library.html">Standard Library</a>
-</div>
-<div class="sidebar-group"><h4>Tooling</h4>
-<a class="" href="tooling.html">Tooling</a>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Distribution and Audit · Clyth Documentation</title>
+  <meta name="description" content="Distribution packaging and ABI audit">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
+<button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
+<p class="sidebar-title">Clyth Docs</p>
+<details open data-sidebar-group="project"><summary>Project</summary>
+<a href="overview.html">Overview</a>
+<a href="getting-started.html">Getting Started</a>
+<a href="roadmap.html">Roadmap</a>
+</details>
+<details open data-sidebar-group="language"><summary>Language</summary>
+<a href="basics.html">Basics</a>
+<a href="types.html">Types</a>
+<a href="strings.html">Strings & Chars</a>
+<a href="functions.html">Functions</a>
+<a href="structs.html">Structs</a>
+<a href="collections.html">Collections</a>
+<a href="ownership.html">Ownership</a>
+<a href="mecc.html">MECC</a>
+</details>
+<details open data-sidebar-group="runtime"><summary>Runtime</summary>
+<a href="runtime.html">Runtime Architecture</a>
+<a href="abi.html">ABI Boundary</a>
+<a href="modules.html">Modules</a>
+</details>
+<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
+<a href="file-io.html">File I/O</a>
+<a href="json.html">JSON</a>
+<a href="hashing.html">Hashing</a>
+<a href="https.html">HTTPS Server</a>
+<a href="standard-library.html">Standard Library Index</a>
+</details>
+<details open data-sidebar-group="tooling"><summary>Tooling</summary>
+<a href="tooling.html">Tooling</a>
 <a class="active" href="distribution.html">Distribution</a>
-</div>
-</aside><article class="doc-page"><span class="breadcrumb">Distribution</span><h1>Distribution</h1><p class="lead">Distribution is part of the trust story: the artifact should be lean, reproducible, and clear about what it contains.</p><section class="doc-split"><div class="doc-split-text"><h2>Lean release artifact</h2><p>The release tarball should not contain giant source/build trees. Users should receive the compiler, runtime files needed to build programs, samples, docs, and license notices.</p></div><div class="doc-split-code"><pre><code>clyth-dist.tar.gz
-  clyth
-  docs/
-  sample-clyth-programs/
-  clyth-runtime/
-  LICENSE.md
-  NOTICE.md</code></pre></div></section><section class="doc-split"><div class="doc-split-text"><h2>Audit before release</h2><p>The audit step protects the release promise that artifacts are not accidentally tied to glibc or GNU libstdc++.</p></div><div class="doc-split-code"><pre><code>./audit_no_gnu_abi.sh
-
-Expected:
-  [ OK ] No GNU/glibc/libstdc++ ABI markers found</code></pre></div></section></article></main><footer class="site-footer"><p>Clyth Documentation · CC BY 4.0 · Code examples MIT unless otherwise specified.</p></footer></body></html>
+</details>
+</aside><article class="doc-page"><span class="breadcrumb">Clyth 0.5.0</span><h1>Distribution and Audit</h1><p class="lead">Clyth distribution bundles should remain lean: compiler binary, runtime files, samples, documentation, inspection tools, and license files.</p><h2>Do not bundle</h2><ul><li>LLVM source trees</li><li>LLVM build directories</li><li>Zig toolchains</li><li>generated object caches</li><li>unrelated vendor source checkouts</li><li>temporary tarballs</li></ul><h2>ABI audit</h2><p>The release audit rejects accidental GNU/glibc/libstdc++ linkage in checked release artifacts while allowing the musl/libc++ path required by the project.</p><pre><code>./audit_no_gnu_abi.sh</code></pre></article></main>
+<footer class="site-footer">Clyth documentation is written for the 0.5.0 Runtime Ecosystem Foundation release.</footer>
+<script src="../assets/js/sidebar.js"></script>
+</body></html>

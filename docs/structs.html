@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Roadmap · Clyth Documentation</title>
-  <meta name="description" content="Clyth roadmap">
+  <title>Structs and Methods · Clyth Documentation</title>
+  <meta name="description" content="Struct layout and behavior">
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
@@ -15,14 +15,14 @@
 <details open data-sidebar-group="project"><summary>Project</summary>
 <a href="overview.html">Overview</a>
 <a href="getting-started.html">Getting Started</a>
-<a class="active" href="roadmap.html">Roadmap</a>
+<a href="roadmap.html">Roadmap</a>
 </details>
 <details open data-sidebar-group="language"><summary>Language</summary>
 <a href="basics.html">Basics</a>
 <a href="types.html">Types</a>
 <a href="strings.html">Strings & Chars</a>
 <a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
+<a class="active" href="structs.html">Structs</a>
 <a href="collections.html">Collections</a>
 <a href="ownership.html">Ownership</a>
 <a href="mecc.html">MECC</a>
@@ -43,7 +43,24 @@
 <a href="tooling.html">Tooling</a>
 <a href="distribution.html">Distribution</a>
 </details>
-</aside><article class="doc-page"><span class="breadcrumb">Clyth 0.5.0</span><h1>Roadmap</h1><p class="lead">0.5.0 establishes the runtime and ABI foundation. Later milestones simplify the compiler and move toward self-hosting.</p><h2>0.5.0 — Runtime Ecosystem Foundation</h2><p>Lock the current alpha language/runtime surface, prove the Clyth wrapper → ABI → native provider model, and release a clean musl/libc++-audited toolchain artifact.</p><h2>0.6.0 — Compiler Simplification and Bootstrap Path</h2><ul><li>replace ANTLR with a compact Pratt parser</li><li>create Clyth-owned AST and IR structures</li><li>move LLVM IR emission into a Clyth-side library/interface</li><li>reduce dependency on LLVM C++ APIs while keeping LLVM optimization/codegen available</li></ul><h2>Later</h2><ul><li>standalone x86_64 and aarch64 Linux musl targets</li><li>module build/distribution tooling</li><li>MECC ownership analysis</li><li>self-hosted compiler/runtime ecosystem</li></ul></article></main>
+</aside><article class="doc-page"><span class="breadcrumb">Clyth 0.5.0</span><h1>Structs and Methods</h1><p class="lead">Structs define data layout. Methods define behavior. Clyth supports methods attached inside the struct body and extension-style method declarations outside the struct.</p><div class="doc-split"><div class="doc-split-text"><h2>Fields and visibility</h2><p>Fields are public by default so data layout stays visible. <code>private</code> is used when a field is an implementation detail, such as an ABI handle.</p></div><div class="doc-split-code"><pre><code>struct Request {
+    private Handle<RequestState> handle
+}
+
+struct Point {
+    int32 x
+    int32 y
+}</code></pre></div></div><div class="doc-split wide"><div class="doc-split-text"><h2>Extension methods</h2><p>Extension methods allow implementation to be organized separately from layout. They are not a mechanism for replacing existing behavior; duplicate method declarations should be rejected so imports remain predictable.</p></div><div class="doc-split-code"><pre><code>struct TestStruct {}
+
+void TestStruct.addTwo(int32 one, int32 two) {
+    println(`${one + two}`)
+}</code></pre></div></div><div class="doc-split wide"><div class="doc-split-text"><h2>Wrapper structs</h2><p>Native-backed modules should expose Clyth structs with methods, not raw native structures. The struct carries a handle. The methods call ABI functions that know how to interpret the handle.</p></div><div class="doc-split-code"><pre><code>struct Request {
+    private Handle<RequestState> handle
+}
+
+string Request.body() {
+    return clyth_https_request_body(this.handle)
+}</code></pre></div></div></article></main>
 <footer class="site-footer">Clyth documentation is written for the 0.5.0 Runtime Ecosystem Foundation release.</footer>
 <script src="../assets/js/sidebar.js"></script>
 </body></html>

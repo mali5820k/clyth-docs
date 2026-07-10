@@ -3,90 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tooling &amp; Build · Clyth Documentation</title>
-  <meta name="description" content="Clyth 0.5.0 documentation: Tooling &amp; Build">
+  <title>Build Tooling · Clyth Documentation</title>
+  <meta name="description" content="Build scripts and generated artifacts">
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a>
-      <div class="nav-links">
-        <a href="overview.html">Docs</a>
-        <a href="language.html">Language</a>
-        <a href="runtime.html">Runtime</a>
-        <a href="tooling.html">Tooling</a>
-        <a href="https://github.com/mali5820k/Cobralyth">GitHub</a>
-      </div>
-    </nav>
-  </header>
-  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
-  <div class="sidebar-backdrop" hidden></div>
-  <main class="docs-shell">
-    <aside class="sidebar" aria-label="Documentation navigation"><p class="sidebar-title">Clyth Docs</p>
-<div class="sidebar-group">
-<h4>Project</h4>
-<a class="" href="overview.html">Overview</a>
-<a class="" href="getting-started.html">Getting Started</a>
-<a class="" href="roadmap.html">Roadmap</a>
-</div>
-<div class="sidebar-group">
-<h4>Language</h4>
-<a class="" href="language.html">Language Guide</a>
-<a class="" href="mecc.html">MECC</a>
-</div>
-<div class="sidebar-group">
-<h4>Runtime</h4>
-<a class="" href="runtime.html">Runtime Architecture</a>
-<a class="" href="modules.html">Module System</a>
-<a class="" href="standard-library.html">Standard Library</a>
-</div>
-<div class="sidebar-group">
-<h4>Tooling</h4>
-<a class="active" href="tooling.html">Tooling & Build</a>
-</div></aside>
-    <article class="doc-page">
-<span class="breadcrumb">Tooling</span>
-<h1>Tooling and Build</h1>
-<p class="lead">The 0.5.0 build is still a bootstrap toolchain, but its release policy is now clear: native artifacts should be lean, auditable, and built through the intended musl/libc++ path.</p>
-<section class="doc-split ">
-  <div class="doc-split-text">
-    <h2>Build the compiler</h2>
-    <p>The main build script prepares dependencies, builds the compiler, builds runtime native archives, and optionally packages a distribution.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>./build_compiler.sh
-
-# Faster development build without creating dist artifacts
-./build_compiler.sh --skip-dist</code></pre></div>
-</section>
-<section class="doc-split wide">
-  <div class="doc-split-text">
-    <h2>Compile Clyth source</h2>
-    <p>The compiler currently lowers Clyth to LLVM IR, then links a native executable using the configured toolchain path.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>./build-compiler/clyth_compiler_bin     -c sample-clyth-programs/web-app-preview/clyth_backend_welcome.clyth     -o sample-clyth-programs/.sample-bin/clyth_backend_welcome</code></pre></div>
-</section>
-<h2>Regression suite</h2>
-<p>The regression suite compiles numbered sample programs and executes them. A sample passes when it exits with code 0. This avoids brittle stdout comparisons and lets each sample validate its own behavior.</p>
-<pre><code>./run_regression_tests.sh</code></pre>
-<h2>ABI audit</h2>
-<p>The ABI audit checks release artifacts for accidental GNU/glibc/libstdc++ leakage. It is intentionally focused on actual dependency evidence rather than strings that linkers may contain merely because they understand other ABIs.</p>
-<pre><code>./audit_no_gnu_abi.sh
-
-# Expected release-candidate result:
-# [ OK ] No GNU/glibc/libstdc++ ABI markers found in checked release artifacts.</code></pre>
-<h2>Distribution policy</h2>
-<p>Distribution artifacts should include the compiler binary, runtime files, samples, documentation, inspection tools, and license files. They should not include LLVM source trees, LLVM build directories, Zig toolchains, generated object caches, or unrelated vendor checkouts.</p>
-<h2>Why LLVM is still present</h2>
-<p>LLVM remains valuable as the backend pipeline: optimization, object generation, target support, and linker ecosystem. The 0.6.0 direction is not to reject LLVM, but to reduce the compiler's reliance on LLVM's C++ APIs by generating LLVM IR from Clyth-owned compiler structures.</p>
-</article>
-  </main>
-  <script>
-    const toggle = document.querySelector('.mobile-docs-toggle');
-    const backdrop = document.querySelector('.sidebar-backdrop');
-    function closeSidebar() { document.body.classList.remove('sidebar-open'); toggle?.setAttribute('aria-expanded', 'false'); backdrop?.setAttribute('hidden', ''); }
-    toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('sidebar-open'); toggle.setAttribute('aria-expanded', String(open)); if (open) backdrop?.removeAttribute('hidden'); else backdrop?.setAttribute('hidden', ''); });
-    backdrop?.addEventListener('click', closeSidebar);
-  </script>
-</body>
-</html>
+<header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
+<button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
+<p class="sidebar-title">Clyth Docs</p>
+<details open data-sidebar-group="project"><summary>Project</summary>
+<a href="overview.html">Overview</a>
+<a href="getting-started.html">Getting Started</a>
+<a href="roadmap.html">Roadmap</a>
+</details>
+<details open data-sidebar-group="language"><summary>Language</summary>
+<a href="basics.html">Basics</a>
+<a href="types.html">Types</a>
+<a href="strings.html">Strings & Chars</a>
+<a href="functions.html">Functions</a>
+<a href="structs.html">Structs</a>
+<a href="collections.html">Collections</a>
+<a href="ownership.html">Ownership</a>
+<a href="mecc.html">MECC</a>
+</details>
+<details open data-sidebar-group="runtime"><summary>Runtime</summary>
+<a href="runtime.html">Runtime Architecture</a>
+<a href="abi.html">ABI Boundary</a>
+<a href="modules.html">Modules</a>
+</details>
+<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
+<a href="file-io.html">File I/O</a>
+<a href="json.html">JSON</a>
+<a href="hashing.html">Hashing</a>
+<a href="https.html">HTTPS Server</a>
+<a href="standard-library.html">Standard Library Index</a>
+</details>
+<details open data-sidebar-group="tooling"><summary>Tooling</summary>
+<a class="active" href="tooling.html">Tooling</a>
+<a href="distribution.html">Distribution</a>
+</details>
+</aside><article class="doc-page"><span class="breadcrumb">Clyth 0.5.0</span><h1>Build Tooling</h1><p class="lead">The current build scripts support compiler development, runtime archive builds, regression execution, ABI auditing, and cleanup of generated artifacts.</p><div class="doc-split"><div class="doc-split-text"><h2>Common commands</h2><p>Use the regression and ABI audit scripts before cutting a release tarball.</p></div><div class="doc-split-code"><pre><code>./build_compiler.sh --skip-dist
+./run_regression_tests.sh
+./audit_no_gnu_abi.sh
+./scripts/clean_generated.sh</code></pre></div></div></article></main>
+<footer class="site-footer">Clyth documentation is written for the 0.5.0 Runtime Ecosystem Foundation release.</footer>
+<script src="../assets/js/sidebar.js"></script>
+</body></html>
