@@ -1,59 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Overview · Clyth Documentation</title>
-  <meta name="description" content="Clyth 0.5.0 overview">
-  <link rel="stylesheet" href="../assets/css/site.css">
-</head>
-<body>
-<header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
-<button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
-<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a class="active" href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a href="types.html">Types</a>
-<a href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a href="collections.html">Collections</a>
-<a href="ownership.html">Ownership</a>
-<a href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside><article class="doc-page"><span class="breadcrumb">Clyth 0.5.0</span><h1>Overview</h1><p class="lead">Clyth 0.5.0 is the Runtime Ecosystem Foundation release. It proves that Clyth code can compile to native executables, cross a stable ABI boundary, and drive useful native-backed runtime capabilities.</p><div class="section-index"><a href="language.html"><strong>Language</strong><span>Alpha syntax and semantics.</span></a><a href="runtime.html"><strong>Runtime</strong><span>ABI and native provider architecture.</span></a><a href="modules.html"><strong>Modules</strong><span>How module wrappers, metadata, and native bindings fit together.</span></a></div><div class="doc-split wide"><div class="doc-split-text"><h2>Current compiler path</h2><p>The current bootstrap compiler lowers the supported language subset through LLVM IR generation. LLVM remains visible because it is the mature optimization and native-code backend used by this release, but Clyth's language model is not intended to be permanently coupled to LLVM's C++ APIs.</p></div><div class="doc-split-code"><pre><code>Clyth source
-  ↓
-ANTLR frontend in the bootstrap compiler
-  ↓
-AST + semantic analysis
-  ↓
-LLVM IR generation
-  ↓
-Zig/musl/libc++ link path
-  ↓
-native Linux executable</code></pre></div></div><h2>0.5.0 validation</h2><ul><li>20+ regression samples covering structs, strings, functions, lambdas, modules, JSON, hashing, file I/O, and HTTPS routing.</li><li>A recursive ABI audit that rejects accidental GNU/glibc/libstdc++ runtime leakage.</li><li>A browser-facing demo where Clyth serves a page and accepts JSON POST payloads through a libuv-backed event loop.</li></ul></article></main>
-<footer class="site-footer">Clyth documentation is written for the 0.5.0 Runtime Ecosystem Foundation release.</footer>
-<script src="../assets/js/sidebar.js"></script>
-</body></html>
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Overview · Clyth Documentation</title><meta content="Clyth 0.5.0 Alpha overview" name="description"/><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header><button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a class="active" href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Project</span><h1>Clyth 0.5.0 Alpha</h1><p class="lead">Version 0.5.0 Alpha is the first public alpha release of Clyth. It establishes a working compiler, runtime ecosystem, module model, regression suite, and native Linux release path.</p><div class="status-note current"><strong>Current release:</strong> 0.5.0 Alpha is released and validated by 24 passing regression programs.</div><h2>What this release represents</h2><p>The released compiler is implemented in C++ and translates Clyth source into LLVM IR. It is intentionally being stabilized rather than expanded indefinitely: its next responsibility is to compile the first compiler written in Clyth.</p><h2>What comes next</h2><p>The 0.6.0 alpha series begins the self-hosting transition. Later milestone numbers are planning markers rather than fixed promises; individual features may move between releases as the compiler is stress-tested. The long-term target remains a stable 1.0 release containing the intended language surface and MECC proper.</p><h2>Read by intent</h2><div class="grid"><a class="mini-card" href="status.html"><h3>Release status</h3><span>Separate implemented behavior from design and research.</span></a><a class="mini-card" href="language.html"><h3>Language reference</h3><span>Review the syntax supported by 0.5.0.</span></a><a class="mini-card" href="compiler-overview.html"><h3>Compiler overview</h3><span>Understand the stage-zero compiler and self-hosting plan.</span></a><a class="mini-card" href="roadmap.html"><h3>Roadmap</h3><span>Follow the path toward 1.0 without treating milestones as frozen contracts.</span></a></div></article></main>
+<footer class="site-footer">Clyth 0.5.0 Alpha documentation.</footer><script src="../assets/js/sidebar.js"></script></body></html>

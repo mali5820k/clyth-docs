@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Design Principles · Clyth Documentation</title><meta content="Design principles guiding Clyth toward 1.0" name="description"/><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header><button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a class="active" href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Project</span><h1>Design principles</h1><p class="lead">Clyth is being designed around a readable compiler, explicit native boundaries, deterministic behavior, and a path from a practical alpha foundation to a self-hosted 1.0 language.</p><section class="doc-split"><div><h2>Readable systems code</h2><p>Language and compiler features should be understandable without requiring contributors to decode a monolithic frontend. The self-hosted compiler is therefore planned as small, composable phases with narrow interfaces.</p></div><div class="doc-split-code"><pre><code>source
+  → tokens
+  → syntax tree
+  → semantic model
+  → Clyth IR
+  → LLVM IR
+  → native program</code></pre></div></section><section class="doc-split"><div><h2>Explicit runtime boundaries</h2><p>Clyth-facing APIs wrap stable C ABI functions. Native implementation details remain behind that boundary so runtime providers can change without forcing application code to depend on C or C++ layouts.</p></div><div class="doc-split-code"><pre><code>Clyth method
+  → extern C ABI function
+  → native provider
+  → operating system</code></pre></div></section><section class="doc-split"><div><h2>No raw-pointer language surface</h2><p>Native providers may use pointers internally, but user-facing Clyth APIs should expose arrays, values, collections, or opaque resource wrappers with an explicit ownership contract. This keeps pointer arithmetic and provider-specific layouts outside ordinary application code.</p></div><div class="doc-split-code"><pre><code>struct Request {
+    private Handle&lt;RequestState&gt; state
+}</code></pre></div></section><section class="doc-split"><div><h2>Foundation before permanence</h2><p>The 0.5.0 compiler exists to prove the pipeline and build the next compiler. Features that would complicate this transitional frontend may be deferred so their first durable implementation can be written in Clyth.</p></div><div class="doc-split-code"><pre><code>0.5.0 C++ compiler
+        ↓
+0.6.0 Clyth compiler
+        ↓
+self-rebuild and expansion
+        ↓
+1.0 stable language</code></pre></div></section><section class="doc-split"><div><h2>MECC as the ownership destination</h2><p>Managed Entanglement for Collapsible Collections organizes ownership around related estates. A root estate losing its final relationship can cause known dependent estates to collapse through compiler-visible cleanup paths. This is a long-term design goal, not a claim about the released 0.5.0 runtime.</p></div><div class="doc-split-code"><pre><code>root estate reaches zero
+  → release owned resources
+  → decrement dependent estates
+  → collapse dependents at zero</code></pre></div></section></article></main>
+<footer class="site-footer">Clyth 0.5.0 Alpha documentation.</footer><script src="../assets/js/sidebar.js"></script></body></html>

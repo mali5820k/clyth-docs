@@ -1,61 +1,19 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MECC · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
-<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
-<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a href="types.html">Types</a>
-<a href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a href="collections.html">Collections</a>
-<a href="ownership.html">Ownership</a>
-<a class="active" href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside><article class="doc-content"><h1>MECC</h1><p>MECC means <strong>Managed Entanglement for Collapsible Collections</strong>. The name describes the intended ownership model: allocations are not only individual resources, but can be part of related estate graphs whose cleanup can collapse deterministically when a root estate is released.</p><section class="doc-split"><div><h2>Root estate collapse</h2><p>An estate is a lifetime region. Estates may depend on other estates. When a root estate loses ownership, dependent estates can decrement and collapse through known cleanup paths.</p></div><div class="doc-split-code"><pre><code>RootEstate app
-  ├─ Estate session
-  │    ├─ JsonDocument body
-  │    └─ List&lt;string&gt; messages
-  └─ Estate cache
-       └─ Map&lt;string, string&gt;
+<!DOCTYPE html>
 
-app.clear()
-// session and cache collapse when their dependency counts reach zero</code></pre></div></section><section class="doc-split"><div><h2>Not tracing garbage collection</h2><p>MECC is not intended to scan the entire heap looking for reachable objects. It works over known ownership relationships, explicit resources, and compiler-visible cleanup paths.</p></div><div class="doc-split-code"><pre><code>// Manual foundation in 0.5.x
-request_scope.free()
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>MECC · Clyth Documentation</title><meta content="Managed Entanglement for Collapsible Collections research direction" name="description"/><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header><button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a class="active" href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Language research</span><h1>MECC</h1><p class="lead"><strong>Managed Entanglement for Collapsible Collections</strong> is Clyth's planned estate-oriented ownership model. It is a design target for the path to 1.0, not an implemented 0.5.0 garbage collector or runtime promise.</p><section class="doc-split"><div><h2>Managed entanglement</h2><p>Resources are grouped into estates with known ownership relationships. Estate metadata represents dependencies between related resource collections instead of treating every allocation as an isolated lifetime problem.</p></div><div class="doc-split-code"><pre><code>Root estate
+  ├─ parser estate
+  │    ├─ tokens
+  │    └─ syntax nodes
+  └─ module estate
+       └─ semantic data</code></pre></div></section><section class="doc-split"><div><h2>Collapsible collections</h2><p>When a root estate loses its final relationship, its known owned resources can be released and dependent estates decremented. A dependent estate that reaches zero can collapse in turn.</p></div><div class="doc-split-code"><pre><code>root reaches zero
+  → run known cleanup paths
+  → release root allocations
+  → decrement dependents
+  → collapse dependents at zero</code></pre></div></section><section class="doc-split"><div><h2>Not tracing garbage collection</h2><p>MECC is not intended to scan arbitrary heap reachability and infer survival globally. It operates on compiler-visible estate relationships and explicit cleanup knowledge.</p></div><div class="doc-split-code"><pre><code>not: scan the whole heap
 
-// Future MECC direction
-mecc estate request_scope {
-    JsonDocument body = JSON.parse(request.body())
-    response.send(200, body.to_string())
-}
-// compiler collapses request_scope here</code></pre></div></section><section class="doc-split"><div><h2>Connection to free()</h2><p><code>free()</code> is the primitive cleanup operation. MECC builds on that convention by grouping resources into estates and reducing repetitive cleanup code where ownership is clear.</p></div><div class="doc-split-code"><pre><code>struct Session {
-    JsonDocument body
-    List&lt;string&gt; tags
-}
-
-void Session.free() {
-    this.body.free()
-    this.tags.free()
-}</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>
+instead:
+collapse a known ownership graph</code></pre></div></section><h2>Why the self-hosted compiler matters</h2><p>The compiler itself will provide a demanding testbed for estates: lexer buffers, token collections, syntax trees, semantic models, IR modules, diagnostics, and temporary build data naturally form related lifetime regions.</p></article></main>
+<footer class="site-footer">Clyth 0.5.0 Alpha documentation.</footer><script src="../assets/js/sidebar.js"></script></body></html>

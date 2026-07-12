@@ -1,5 +1,12 @@
-# Clyth documentation navigation consistency patch
+# Clyth Documentation
 
-Every rendered page now uses the same top navigation labels and destinations: Docs, Language, Runtime, Modules, and MECC. The redirect-only `docs/index.html` remains intentionally headerless.
+This repository contains the complete documentation snapshot for **Clyth 0.5.0 Alpha**.
 
-The canonical sidebar and the expanded reference-page layouts are preserved.
+The site distinguishes:
+
+- behavior implemented by the released 0.5.0 compiler and runtime;
+- the active 0.6.0 self-hosting work;
+- malleable alpha milestones on the path to 1.0; and
+- research directions such as MECC.
+
+Open `index.html` directly or publish the repository through GitHub Pages. All navigation uses relative links.

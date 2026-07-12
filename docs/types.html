@@ -1,61 +1,47 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Types · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
-<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
-<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a class="active" href="types.html">Types</a>
-<a href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a href="collections.html">Collections</a>
-<a href="ownership.html">Ownership</a>
-<a href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside><article class="doc-content"><h1>Types</h1><p>Clyth uses explicit primitive widths so systems code can state the storage and arithmetic behavior it expects. Numeric overflow and underflow follow the selected integer width; the docs show those boundaries because they are part of the language surface, not an incidental backend detail.</p><section class="doc-split"><div><h2>Primitive integer widths</h2><p>Signed and unsigned integer types are distinct. Use the smallest type that accurately represents the value range, especially in ABI-facing code where field width matters.</p></div><div class="doc-split-code"><pre><code>int8   a = -128
-uint8  b = 255
-int16  c = -32768
-uint16 d = 65535
-int32  e = 2147483647
-uint32 f = 4294967295
-int64  g = 9223372036854775807
-uint64 h = 18446744073709551615</code></pre></div></section><section class="doc-split"><div><h2>Overflow and underflow</h2><p>Variables of distinct sizes overflow or underflow as expected when arithmetic exceeds the representable range of that type. These examples are useful regression targets because they make fixed-width behavior visible.</p></div><div class="doc-split-code"><pre><code>uint8 max = 255
-uint8 wrapped = max + 1
-// wrapped == 0
+<!DOCTYPE html>
 
-uint8 zero = 0
-uint8 under = zero - 1
-// under == 255</code></pre></div></section><section class="doc-split"><div><h2>Characters and booleans</h2><p><code>char</code> is the scalar character/code-unit type used by fixed character arrays and string conversion APIs. <code>bool</code> is used for branch conditions and API results.</p></div><div class="doc-split-code"><pre><code>char letter = 'C'
-bool ok = true
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Types · Clyth Documentation</title><meta content="Primitive and composite types in Clyth 0.5.0" name="description"/><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header><button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a class="active" href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Language</span><h1>Primitive and composite types</h1><p class="lead">Clyth uses explicit-width numeric types alongside booleans, characters, strings, arrays, structs, function values, and runtime collection types.</p><h2>Integer types</h2><table class="api-table"><thead><tr><th>Signed</th><th>Unsigned</th><th>Width</th></tr></thead><tbody><tr><td><code>int8</code></td><td><code>uint8</code></td><td>8 bits</td></tr><tr><td><code>int16</code></td><td><code>uint16</code></td><td>16 bits</td></tr><tr><td><code>int32</code></td><td><code>uint32</code></td><td>32 bits</td></tr><tr><td><code>int64</code></td><td><code>uint64</code></td><td>64 bits</td></tr></tbody></table><p>Values overflow or underflow according to their representable width. The 0.5.0 boundary regression verifies unsigned wrapping and widening behavior.</p><section class="doc-split"><div><h2>Floating point and boolean</h2><p><code>float32</code> and <code>float64</code> represent floating-point values. <code>bool</code> represents <code>true</code> or <code>false</code>.</p></div><div class="doc-split-code"><pre><code>float32 ratio = 0.5
+float64 precise = 42.125
+bool ready = true</code></pre></div></section><section class="doc-split"><div><h2>Characters, strings, and arrays</h2><p><code>char</code> represents a character, <code>string</code> represents runtime text, and <code>T[N]</code>/<code>T[]</code> forms represent array surfaces supported by the compiler and runtime.</p></div><div class="doc-split-code"><pre><code>char prefix = 'C'
+string name = "Clyth"
+int32[] values = [1, 2, 3]</code></pre></div></section><section class="doc-split"><div><h2>Null</h2><p><code>null</code> is available for nullable reference-like or opaque-resource surfaces where the declared type permits absence. Primitive numeric values are not implicitly nullable.</p></div><div class="doc-split-code"><pre><code>Handle&lt;NativeState&gt; state = null
 
-if ok {
-    println(`letter = ${letter}`)
-}</code></pre></div></section><section class="doc-split"><div><h2>Null values</h2><p><code>null</code> represents absence for nullable-capable values such as dynamic arrays, collections, and opaque runtime resources. It is not a valid value for numeric primitives.</p></div><div class="doc-split-code"><pre><code>JsonDocument document = null
+if state == null {
+    println("not initialized")
+}</code></pre></div></section><section data-doc-section="default-initialization">
+<h2>Default initialization</h2>
+<p>Clyth 0.5.0 Alpha initializes newly declared primitive variables to deterministic values. Numeric values begin at zero, booleans begin as <code>false</code>, and characters begin as the zero character <code>'\0'</code>. The current runtime representation of an uninitialized <code>string</code> is a null string value, which prints as <code>(null)</code>.</p>
+<table class="api-table">
+<thead><tr><th>Type</th><th>0.5.0 default</th></tr></thead>
+<tbody>
+<tr><td><code>int8</code> through <code>int64</code></td><td><code>0</code></td></tr>
+<tr><td><code>uint8</code> through <code>uint64</code></td><td><code>0</code></td></tr>
+<tr><td><code>float32</code> and <code>float64</code></td><td><code>0.0</code></td></tr>
+<tr><td><code>bool</code></td><td><code>false</code></td></tr>
+<tr><td><code>char</code></td><td><code>'\0'</code></td></tr>
+<tr><td><code>string</code></td><td>null runtime string; prints as <code>(null)</code></td></tr>
+</tbody>
+</table>
+<section class="doc-split">
+<div>
+<h3>Observed behavior</h3>
+<p>This behavior was verified against the released 0.5.0 compiler. Explicit initialization is still recommended when a meaningful application value is available.</p>
+<p>Future string work may replace the null runtime representation with an empty value while preserving deterministic initialization.</p>
+</div>
+<div class="doc-split-code"><pre><code>int32 counter
+bool enabled
+char separator
+float64 total
+string message
 
-if document != null {
-    println(document.to_string())
-}
-
-// int32 count = null  // semantic error</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>
+println(`${counter}`)   // 0
+println(`${enabled}`)   // 0 / false
+println(`${separator}`) // zero character
+println(`${total}`)     // 0.000000
+println(`${message}`)   // (null)</code></pre></div>
+</section>
+</section><h2>Compiler-generated temporaries</h2><p>A generalized mutable-temporary lowering model is a future compiler design, not part of the 0.5.0 type contract.</p></article></main>
+<footer class="site-footer">Clyth 0.5.0 Alpha documentation.</footer><script src="../assets/js/sidebar.js"></script></body></html>

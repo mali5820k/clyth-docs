@@ -1,60 +1,16 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ownership and free · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
-<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
-<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a href="types.html">Types</a>
-<a href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a href="collections.html">Collections</a>
-<a class="active" href="ownership.html">Ownership</a>
-<a href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside><article class="doc-content"><h1>Ownership and <code>free()</code></h1><p><code>free()</code> is Clyth's destructor convention. It gives the compiler one cleanup target to reason about now and gives MECC a predictable cleanup hook later.</p><section class="doc-split"><div><h2>Manual cleanup convention</h2><p>Types that own runtime resources expose <code>free()</code>. Code that allocates owned resources should call <code>free()</code> once ownership is no longer needed. Future compiler passes can insert proven calls automatically.</p></div><div class="doc-split-code"><pre><code>JsonDocument document = JSON.parse(text)
+<!DOCTYPE html>
 
-println(document.to_string())
-
-document.free()</code></pre></div></section><section class="doc-split"><div><h2>Borrowed handles</h2><p><code>Handle&lt;T&gt;</code> represents an opaque runtime reference whose lifetime is owned elsewhere. It is passable through ABI functions, but user code does not free it.</p></div><div class="doc-split-code"><pre><code>struct Request {
-    private Handle&lt;RequestState&gt; native_handle
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Ownership · Clyth Documentation</title><meta content="Current ownership contracts and future cleanup direction" name="description"/><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header><button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a class="active" href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Language design</span><h1>Ownership and cleanup</h1><p class="lead">Clyth 0.5.0 establishes explicit cleanup conventions for types that expose a real ownership contract. Automatic ownership inference remains future work.</p><div class="status-note current"><strong>Current rule:</strong> call <code>.free()</code> only when a type or module explicitly documents that method and transfers ownership to the caller. Do not guess based on an internal pointer or native implementation.</div><section class="doc-split"><div><h2>Borrowed opaque resources</h2><p><code>Handle&lt;T&gt;</code> represents a resource reference whose lifetime belongs to the runtime or native provider. A borrowed handle is not manually freed by ordinary application code.</p></div><div class="doc-split-code"><pre><code>struct Request {
+    private Handle&lt;RequestState&gt; state
+}</code></pre></div></section><section class="doc-split"><div><h2>Explicitly owned resources</h2><p><code>OwnedHandle&lt;T&gt;</code> communicates that a wrapper owns the underlying resource. Its wrapper must provide a documented release path, conventionally <code>.free()</code>.</p></div><div class="doc-split-code"><pre><code>struct NativeBuffer {
+    private OwnedHandle&lt;BufferState&gt; state
 }
 
-string Request.body() {
-    return https_request_body(this.native_handle)
-}</code></pre></div></section><section class="doc-split"><div><h2>Owned handles</h2><p><code>OwnedHandle&lt;T&gt;</code> represents an opaque runtime resource owned by the Clyth wrapper. It must have a known release path, usually implemented by the wrapper's <code>free()</code> method.</p></div><div class="doc-split-code"><pre><code>struct JsonDocument {
-    private OwnedHandle&lt;JsonState&gt; native_handle
-}
-
-void JsonDocument.free() {
-    json_document_release(this.native_handle)
-}</code></pre></div></section><section class="doc-split"><div><h2>Why raw native structs are hidden</h2><p>Native structs create ABI coupling. If a Clyth struct exposes a libuv or yyjson layout directly, a native dependency update can break the language surface. Opaque resources keep the public API stable while allowing native implementations to evolve.</p></div><div class="doc-split-code"><pre><code>// Public Clyth wrapper
-struct Response {
-    private Handle&lt;ResponseState&gt; native_handle
-}
-
-void Response.send(int32 status, string payload) {
-    https_response_send(this.native_handle, status, payload)
-}</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>
+void NativeBuffer.free() {
+    native_buffer_release(this.state)
+}</code></pre></div></section><section class="doc-split"><div><h2>File I/O does not expose a file handle</h2><p>The current <code>read_file</code> and <code>write_file</code> functions complete their operations behind the runtime boundary. User code receives a value or completion result, not a file pointer that must be released.</p></div><div class="doc-split-code"><pre><code>string text = read_file("config.json")
+write_file("copy.json", text)</code></pre></div></section><h2>Future automatic cleanup</h2><p>Scope-generated cleanup, string lifetime rules, estate inference, and MECC-driven collapse are planned for the self-hosted compiler and later alpha milestones. They are not silently performed by every 0.5.0 type.</p></article></main>
+<footer class="site-footer">Clyth 0.5.0 Alpha documentation.</footer><script src="../assets/js/sidebar.js"></script></body></html>

@@ -1,54 +1,11 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Strings and Chars · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
-<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
-<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a href="types.html">Types</a>
-<a class="active" href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a href="collections.html">Collections</a>
-<a href="ownership.html">Ownership</a>
-<a href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside><article class="doc-content"><h1>Strings, Characters, and Slices</h1><p>Clyth separates fixed character storage from ergonomic string values. The language should expose <code>char</code>, <code>char[N]</code>, slices, and <code>string</code> without exposing raw pointer types in normal Clyth code.</p><section class="doc-split"><div><h2>Fixed character arrays</h2><p><code>char[N]</code> is the explicit fixed-storage representation. It is useful for embedded-facing code, stack-oriented buffers, ABI staging, and places where capacity should be visible in the source.</p></div><div class="doc-split-code"><pre><code>char[5] word = ['C', 'l', 'y', 't', 'h']
-char first = word[0]
-char last = word[4]</code></pre></div></section><section class="doc-split"><div><h2>Runtime strings and SSO</h2><p><code>string</code> is an ergonomic runtime value. The intended runtime representation uses small-string optimization: short contents live inline in the string value; longer contents use runtime-managed character storage. <code>string.free()</code> can therefore be a safe no-op for inline or static storage and release only heap-backed storage.</p></div><div class="doc-split-code"><pre><code>string short_name = "Clyth"
-string long_message = "Clyth runtime strings can grow beyond the inline buffer"
+<!DOCTYPE html>
 
-short_name.free()
-long_message.free()</code></pre></div></section><section class="doc-split"><div><h2>String to char-array conversion</h2><p>Converting to fixed character storage requires an explicit range. The destination capacity must be large enough for the selected range; Clyth should reject or trap unsafe conversions rather than silently truncating.</p></div><div class="doc-split-code"><pre><code>string name = "Clyth"
-char[5] fixed = name.to_array(0, 4)
-
-// Full conversion once dependent lengths are supported:
-// char[name.length()] data = name.to_array(0, name.length() - 1)</code></pre></div></section><section class="doc-split"><div><h2>char-array to string conversion</h2><p>A character array or slice can become a string value. If the resulting string fits inline, no heap allocation is needed; otherwise the runtime string implementation can allocate managed storage.</p></div><div class="doc-split-code"><pre><code>char[5] raw = ['C', 'l', 'y', 't', 'h']
-string value = raw.to_string()
-
-string message = "compiler: " + raw[0:5:1]</code></pre></div></section><section class="doc-split"><div><h2>Slice syntax</h2><p>Slice syntax follows <code>[start:end:step]</code>. The end index is exclusive. A slice is a bounded view; it should not allocate unless explicitly materialized into an owned string or collection.</p></div><div class="doc-split-code"><pre><code>char[10] data = ['0','1','2','3','4','5','6','7','8','9']
-
-string first_five = data[0:5:1]
-string every_other = data[0:10:2]
-string reversed_direction_later = data[9:0:-1]</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Strings &amp; Chars · Clyth Documentation</title><meta content="Released string and character surface in Clyth 0.5.0" name="description"/><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header><button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a class="active" href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Language</span><h1>Strings and characters</h1><p class="lead">Clyth 0.5.0 supports string values, string literals, formatted literals, characters, and array types used by the released runtime and sample programs.</p><div class="status-note current"><strong>Current contract:</strong> this page documents the released surface. Proposed value-copy rules, automatic string destruction, interning, and MECC-backed storage are future design work.</div><section class="doc-split"><div><h2>String values</h2><p>Use <code>string</code> for text accepted by runtime APIs and formatted literals. The 0.5.0 compiler and runtime provide the representation used by current modules; user code should not assume a future ownership or storage optimization.</p></div><div class="doc-split-code"><pre><code>string project = "Clyth"
+string release = `${project} 0.5.0 Alpha`
+println(release)</code></pre></div></section><section class="doc-split"><div><h2>Characters and arrays</h2><p><code>char</code> represents an individual character. Array syntax may be fixed-size or dynamic according to the declared type and the compiler/runtime path being used.</p></div><div class="doc-split-code"><pre><code>char marker = 'C'
+char[5] name = ['C', 'l', 'y', 't', 'h']</code></pre></div></section><section class="doc-split"><div><h2>Formatted literals</h2><p>Backtick literals interpolate expressions with <code>${...}</code>. This behavior is covered by the 0.5.0 regression suite.</p></div><div class="doc-split-code"><pre><code>int32 passed = 24
+println(`regression tests: ${passed}/24`)</code></pre></div></section><h2>Future design direction</h2><p>The self-hosted compiler is expected to define richer value semantics, scope-aware cleanup, char-array conversion and slicing rules, compiler-materialized temporary storage, and possible interning or MECC optimizations. Those ideas are intentionally not presented as implemented 0.5.0 behavior.</p></article></main>
+<footer class="site-footer">Clyth 0.5.0 Alpha documentation.</footer><script src="../assets/js/sidebar.js"></script></body></html>

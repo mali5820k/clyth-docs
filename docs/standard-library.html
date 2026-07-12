@@ -1,77 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Standard Library · Clyth Documentation</title>
-  <meta name="description" content="Clyth 0.5.0 documentation: Standard Library">
-  <link rel="stylesheet" href="../assets/css/site.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Standard Library · Clyth Documentation</title>
+<meta content="Clyth 0.5.0 documentation: Standard Library" name="description"/>
+<link href="../assets/css/site.css" rel="stylesheet"/>
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="../"><span class="brand-mark">C</span><span>Clyth</span></a>
-      <div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div>
-    </nav>
-  </header>
-  <button class="mobile-docs-toggle" type="button" aria-label="Open documentation menu" aria-expanded="false">Docs Menu</button>
-  <div class="sidebar-backdrop" hidden></div>
-  <main class="docs-shell">
-    <aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a href="types.html">Types</a>
-<a href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a href="collections.html">Collections</a>
-<a href="ownership.html">Ownership</a>
-<a href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a class="active" href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside>
-    <article class="doc-page">
+<header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header>
+<button aria-expanded="false" aria-label="Open documentation menu" class="mobile-docs-toggle" type="button">Docs Menu</button>
+<div class="sidebar-backdrop" hidden=""></div>
+<main class="docs-shell">
+<aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a class="active" href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside>
+<article class="doc-page">
 <span class="breadcrumb">Runtime</span>
 <h1>Standard Library and Runtime Modules</h1>
 <p class="lead">The 0.5.0 runtime surface is intentionally practical: file I/O, printing, JSON, hashing, collections, and a server abstraction. Each module follows the wrapper → ABI → native provider model rather than exposing native library layouts directly.</p>
 <h2>File I/O and printing</h2>
 <p>The file I/O module provides synchronous user-facing calls backed by the native file subsystem. In 0.5.0 the backend is routed through libuv. libuv itself uses a default worker pool of four threads for filesystem operations. That default is suitable for moderate workloads, but server-heavy or file-heavy applications may eventually need runtime configuration for the worker pool size and scheduling policy.</p>
-<table class="api-table"><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>print(value)</code></td><td>Writes a value to standard output without appending a newline. The value should be a string today; later <code>to_string()</code> integration can generalize this.</td></tr><tr><td><code>println(value)</code></td><td>Writes a value to standard output and appends a newline.</td></tr><tr><td><code>read_file(path: string) -> string</code></td><td>Reads the full contents of a file and returns it as a Clyth string.</td></tr><tr><td><code>write_file(path: string, contents: string) -> void</code></td><td>Writes contents to a file, replacing existing contents.</td></tr><tr><td><code>append_file(path: string, contents: string) -> void</code></td><td>Appends contents to a file.</td></tr><tr><td><code>file_exists(path: string) -> bool</code></td><td>Returns true when the path exists.</td></tr><tr><td><code>delete_file(path: string) -> void</code></td><td>Deletes the file at the given path when supported by the backend.</td></tr></tbody></table>
+<table class="api-table"><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>void print(string value)</code></td><td>Writes a value to standard output without appending a newline. The value should be a string today; later <code>to_string()</code> integration can generalize this.</td></tr><tr><td><code>void println(string value)</code></td><td>Writes a value to standard output and appends a newline.</td></tr><tr><td><code>string read_file(string path)</code></td><td>Reads the full contents of a file and returns it as a Clyth string.</td></tr><tr><td><code>void write_file(string path, string contents)</code></td><td>Writes contents to a file, replacing existing contents.</td></tr><tr><td><code>void append_file(string path, string contents)</code></td><td>Appends contents to a file.</td></tr><tr><td><code>bool file_exists(string path)</code></td><td>Returns true when the path exists.</td></tr><tr><td><code>void delete_file(string path)</code></td><td>Deletes the file at the given path when supported by the backend.</td></tr></tbody></table>
 <section class="doc-split wide">
-  <div class="doc-split-text">
-    <h2>File I/O usage</h2>
-    <p>Use file I/O through Clyth names, not through direct POSIX calls. That allows the native provider to remain libuv-backed today and evolve later without changing application code.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>include &quot;file-io&quot;
+<div class="doc-split-text">
+<h2>File I/O usage</h2>
+<p>Use file I/O through Clyth names, not through direct POSIX calls. That allows the native provider to remain libuv-backed today and evolve later without changing application code.</p>
+</div>
+<div class="doc-split-code"><pre><code>include "file-io"
 
 int32 main(string[] args) {
-    write_file(&quot;message.txt&quot;, &quot;hello from Clyth&quot;)
+    write_file("message.txt", "hello from Clyth")
 
-    if file_exists(&quot;message.txt&quot;) {
-        string text = read_file(&quot;message.txt&quot;)
+    if file_exists("message.txt") {
+        string text = read_file("message.txt")
         println(`file contents: ${text}`)
-        delete_file(&quot;message.txt&quot;)
+        delete_file("message.txt")
     }
 
     return 0
@@ -79,67 +42,67 @@ int32 main(string[] args) {
 </section>
 <h2>JSON</h2>
 <p>The JSON module is backed by yyjson through a thin ABI layer. Clyth owns the <code>JSON</code> surface and <code>JsonValue</code> concepts. yyjson provides parsing/stringify performance below the ABI boundary.</p>
-<table class="api-table"><thead><tr><th>Method</th><th>Description</th></tr></thead><tbody><tr><td><code>JSON.is_valid(text: string) -> bool</code></td><td>Validates whether a string is parseable JSON.</td></tr><tr><td><code>JSON.parse(text: string) -> JsonValue</code></td><td>Parses a JSON string and returns a runtime JSON value handle/wrapper.</td></tr><tr><td><code>JSON.stringify(value) -> string</code></td><td>Converts a supported value or JSON value into a JSON string.</td></tr><tr><td><code>JsonValue.to_string() -> string</code></td><td>Returns the serialized representation of the JSON value.</td></tr></tbody></table>
+<table class="api-table"><thead><tr><th>Method</th><th>Description</th></tr></thead><tbody><tr><td><code>bool JSON.is_valid(string text)</code></td><td>Validates whether a string is parseable JSON.</td></tr><tr><td><code>JsonValue JSON.parse(string text)</code></td><td>Parses a JSON string and returns a runtime JSON value handle/wrapper.</td></tr><tr><td><code>string JSON.stringify(JsonValue value)</code></td><td>Converts a supported value or JSON value into a JSON string.</td></tr><tr><td><code>string JsonValue.to_string()</code></td><td>Returns the serialized representation of the JSON value.</td></tr></tbody></table>
 <section class="doc-split wide">
-  <div class="doc-split-text">
-    <h2>JSON with a route handler</h2>
-    <p>JSON commonly appears at server boundaries. Request bodies arrive as strings; the JSON module validates or parses them; responses can be serialized with <code>JSON.stringify</code>.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>include &quot;https&quot;
-include &quot;json&quot;
+<div class="doc-split-text">
+<h2>JSON with a route handler</h2>
+<p>JSON commonly appears at server boundaries. Request bodies arrive as strings; the JSON module validates or parses them; responses can be serialized with <code>JSON.stringify</code>.</p>
+</div>
+<div class="doc-split-code"><pre><code>include "https"
+include "json"
 
-router.post(&quot;/api/message&quot;, (Request request, Response response) =&gt; {
+router.post("/api/message", (Request request, Response response) =&gt; {
     string body = request.body()
 
     if JSON.is_valid(body) {
-        response.send(200, JSON.stringify({ &quot;received&quot;: true }))
+        response.send(200, JSON.stringify({ "received": true }))
     } else {
-        response.send(400, JSON.stringify({ &quot;error&quot;: &quot;invalid JSON&quot; }))
+        response.send(400, JSON.stringify({ "error": "invalid JSON" }))
     }
 })</code></pre></div>
 </section>
 <h2>Hashing</h2>
 <p>The hash module uses rapidhash as the native provider. Hashing is runtime functionality: the compiler does not need to know how rapidhash works. It only links the module and exposes Clyth wrapper functions.</p>
-<table class="api-table"><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>hash_string(value: string) -> uint64</code></td><td>Hashes a string and returns a 64-bit value.</td></tr><tr><td><code>hash_bytes(data) -> uint64</code></td><td>Hashes byte-oriented data when the runtime representation is available.</td></tr><tr><td><code>Hasher</code></td><td>A future wrapper direction for incremental hashing and seeded hashing.</td></tr></tbody></table>
+<table class="api-table"><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>uint64 hash_string(string value)</code></td><td>Hashes a string and returns a 64-bit value.</td></tr><tr><td><code>uint64 hash_bytes(uint8[] data)</code></td><td>Hashes byte-oriented data when the runtime representation is available.</td></tr><tr><td><code>Hasher</code></td><td>A future wrapper direction for incremental hashing and seeded hashing.</td></tr></tbody></table>
 <h2>Collections</h2>
 <p>Collections are generic runtime types. They are not intended to be a special compiler-only feature. The compiler checks syntax and types; the runtime module owns behavior, allocation strategy, and hash integration.</p>
 <table class="api-table"><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>List&lt;T&gt;</code></td><td>Ordered dynamic sequence of values of type <code>T</code>.</td></tr><tr><td><code>Set&lt;T&gt;</code></td><td>Uniqueness-oriented collection backed by hashing support.</td></tr><tr><td><code>Map&lt;K,V&gt;</code></td><td>Key-value collection using hash support for lookup.</td></tr></tbody></table>
-<section class="doc-split ">
-  <div class="doc-split-text">
-    <h2>Generic collection usage</h2>
-    <p>Generic collection syntax keeps type information visible at the call site while leaving storage behavior in the runtime module.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>include &quot;collections&quot;
+<section class="doc-split">
+<div class="doc-split-text">
+<h2>Generic collection usage</h2>
+<p>Generic collection syntax keeps type information visible at the call site while leaving storage behavior in the runtime module.</p>
+</div>
+<div class="doc-split-code"><pre><code>include "collections"
 
 List&lt;int32&gt; ports = List&lt;int32&gt;()
 ports.push(8080)
 ports.push(9090)
 
 Map&lt;string, int32&gt; status = Map&lt;string, int32&gt;()
-status.set(&quot;ok&quot;, 200)
-status.set(&quot;not_found&quot;, 404)</code></pre></div>
+status.set("ok", 200)
+status.set("not_found", 404)</code></pre></div>
 </section>
 <h2>HTTPS / server module</h2>
 <p>The server-facing module is <code>https</code>. Plain HTTP is the behavior when TLS certificates are not configured; TLS becomes a configuration detail rather than a separate user-facing server type. The native implementation uses libuv for the event loop and TCP behavior, llhttp for HTTP parsing, and OpenSSL for TLS direction.</p>
-<table class="api-table"><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>Router()</code></td><td>Creates a route registry.</td></tr><tr><td><code>router.get(path: string, handler: function&lt;void(Request, Response)&gt;) -> void</code></td><td>Registers a GET route.</td></tr><tr><td><code>router.post(path: string, handler: function&lt;void(Request, Response)&gt;) -> void</code></td><td>Registers a POST route.</td></tr><tr><td><code>Request.body() -> string</code></td><td>Returns the request body associated with the current native request handle.</td></tr><tr><td><code>Request.method() -> string</code></td><td>Returns the HTTP method.</td></tr><tr><td><code>Request.path() -> string</code></td><td>Returns the parsed request path.</td></tr><tr><td><code>Request.query() -> string</code></td><td>Returns query-string data when present.</td></tr><tr><td><code>Response.send(status: int32, payload: string) -> void</code></td><td>Sends an HTTP response with a status code and payload.</td></tr><tr><td><code>ServerConfiguration(port: int32, router: Router)</code></td><td>Configures server startup for the current runtime.</td></tr><tr><td><code>Server.start() -> void</code></td><td>Starts the libuv event loop and serves until shutdown.</td></tr></tbody></table>
+<table class="api-table"><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>Router()</code></td><td>Creates a route registry.</td></tr><tr><td><code>void Router.get(string path, function&lt;void(Request, Response)&gt; handler)</code></td><td>Registers a GET route.</td></tr><tr><td><code>void Router.post(string path, function&lt;void(Request, Response)&gt; handler)</code></td><td>Registers a POST route.</td></tr><tr><td><code>string Request.body()</code></td><td>Returns the request body associated with the current native request handle.</td></tr><tr><td><code>string Request.method()</code></td><td>Returns the HTTP method.</td></tr><tr><td><code>string Request.path()</code></td><td>Returns the parsed request path.</td></tr><tr><td><code>string Request.query()</code></td><td>Returns query-string data when present.</td></tr><tr><td><code>void Response.send(int32 status, string payload)</code></td><td>Sends an HTTP response with a status code and payload.</td></tr><tr><td><code>ServerConfiguration(int32 port, Router router)</code></td><td>Configures server startup for the current runtime.</td></tr><tr><td><code>int32 Server.start()</code></td><td>Starts the libuv event loop and serves until shutdown.</td></tr></tbody></table>
 <section class="doc-split wide">
-  <div class="doc-split-text">
-    <h2>Server usage</h2>
-    <p>The route handler is an ordinary Clyth lambda whose parameters are wrapper objects. The callback ABI remains stable because <code>Request</code> and <code>Response</code> carry handles rather than native parser/socket structs.</p>
-  </div>
-  <div class="doc-split-code"><pre><code>include &quot;https&quot;
-include &quot;json&quot;
+<div class="doc-split-text">
+<h2>Server usage</h2>
+<p>The route handler is an ordinary Clyth lambda whose parameters are wrapper objects. The callback ABI remains stable because <code>Request</code> and <code>Response</code> carry handles rather than native parser/socket structs.</p>
+</div>
+<div class="doc-split-code"><pre><code>include "https"
+include "json"
 
 int32 main(string[] args) {
     Router router = Router()
 
-    router.get(&quot;/&quot;, (Request request, Response response) =&gt; {
-        response.send(200, &quot;&lt;h1&gt;Hello from Clyth&lt;/h1&gt;&quot;)
+    router.get("/", (Request request, Response response) =&gt; {
+        response.send(200, "&lt;h1&gt;Hello from Clyth&lt;/h1&gt;")
     })
 
-    router.post(&quot;/api/message&quot;, (Request request, Response response) =&gt; {
+    router.post("/api/message", (Request request, Response response) =&gt; {
         println(`body: ${request.body()}`)
-        response.send(200, JSON.stringify({ &quot;received&quot;: true }))
+        response.send(200, JSON.stringify({ "received": true }))
     })
 
     ServerConfiguration configuration = ServerConfiguration(9090, router)
@@ -150,13 +113,13 @@ int32 main(string[] args) {
 }</code></pre></div>
 </section>
 </article>
-  </main>
-  <script>
+</main>
+<script>
     const toggle = document.querySelector('.mobile-docs-toggle');
     const backdrop = document.querySelector('.sidebar-backdrop');
     function closeSidebar() { document.body.classList.remove('sidebar-open'); toggle?.setAttribute('aria-expanded', 'false'); backdrop?.setAttribute('hidden', ''); }
     toggle?.addEventListener('click', () => { const open = document.body.classList.toggle('sidebar-open'); toggle.setAttribute('aria-expanded', String(open)); if (open) backdrop?.removeAttribute('hidden'); else backdrop?.setAttribute('hidden', ''); });
     backdrop?.addEventListener('click', closeSidebar);
   </script>
-</body>
+<script src="../assets/js/sidebar.js"></script></body>
 </html>

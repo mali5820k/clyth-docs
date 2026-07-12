@@ -1,56 +1,17 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Collections · Clyth Documentation</title><link rel="stylesheet" href="../assets/css/site.css"></head>
-<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
-<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a href="types.html">Types</a>
-<a href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a class="active" href="collections.html">Collections</a>
-<a href="ownership.html">Ownership</a>
-<a href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside><article class="doc-content"><h1>Collections</h1><p>Collections are runtime types, not compiler-owned syntax tricks. They are generic Clyth-facing APIs backed by runtime storage and hashing where appropriate.</p><section class="doc-split"><div><h2>List<T></h2><p><code>List&lt;T&gt;</code> stores ordered values. As of 0.5.x, constructor types are explicit. Constructor inference such as <code>List&lt;int32&gt; values = List()</code> is a 0.6.0 compiler simplification target.</p></div><div class="doc-split-code"><pre><code>include "collections"
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Collections · Clyth Documentation</title><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header>
+<button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div><main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a class="active" href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Language</span><h1>Collections</h1><p class="lead">Clyth 0.5.0 provides generic runtime collections used by application code and by the future self-hosted compiler.</p><div class="status-note current"><strong>Current syntax:</strong> generic constructor arguments remain explicit in the released compiler.</div><section class="doc-split"><div><h2>List&lt;T&gt;</h2><p><code>List&lt;T&gt;</code> stores ordered values. The collection owns the runtime storage described by its API and exposes explicit cleanup where required.</p></div><div class="doc-split-code"><pre><code>include "collections"
 
 List&lt;int32&gt; values = List&lt;int32&gt;()
 values.add(10)
 values.add(20)
-
-println(`${values.get(0)}`)
-values.free()</code></pre></div></section><section class="doc-split"><div><h2>Map<K,V></h2><p><code>Map&lt;K,V&gt;</code> maps keys to values. The duplicated generic constructor form is current 0.5.x syntax; simplifying it belongs with the bootstrapped compiler rewrite.</p></div><div class="doc-split-code"><pre><code>Map&lt;string, int32&gt; scores = Map&lt;string, int32&gt;()
-scores.set("compiler", 1)
-scores.set("runtime", 2)
-
-println(`${scores.get("runtime")}`)
-scores.free()</code></pre></div></section><section class="doc-split"><div><h2>Set<T></h2><p><code>Set&lt;T&gt;</code> stores unique values. Hashing is provided through the hash module/runtime implementation.</p></div><div class="doc-split-code"><pre><code>Set&lt;string&gt; names = Set&lt;string&gt;()
+println(`${values.length()}`)
+values.free()</code></pre></div></section><section class="doc-split"><div><h2>Map&lt;K, V&gt;</h2><p><code>Map&lt;K, V&gt;</code> associates keys with values. Constructor inference may be explored in the self-hosted compiler, but the duplicated generic form is the current 0.5.0 syntax.</p></div><div class="doc-split-code"><pre><code>Map&lt;string, int32&gt; scores = Map&lt;string, int32&gt;()
+scores.set("compiler", 24)
+println(`${scores.get("compiler")}`)
+scores.free()</code></pre></div></section><section class="doc-split"><div><h2>Set&lt;T&gt;</h2><p><code>Set&lt;T&gt;</code> stores unique values and uses the runtime hashing layer where appropriate.</p></div><div class="doc-split-code"><pre><code>Set&lt;string&gt; names = Set&lt;string&gt;()
 names.add("Clyth")
 names.add("MECC")
-
-if names.contains("Clyth") {
-    println("found")
-}
-names.free()</code></pre></div></section></article></main><script src="../assets/js/sidebar.js"></script></body></html>
+names.free()</code></pre></div></section><h2>Compiler stress testing</h2><p>The self-hosted compiler will exercise collections at a larger scale through token streams, syntax nodes, symbol tables, diagnostics, modules, and generated IR. That workload is expected to expose correctness and performance issues that small samples cannot.</p></article></main><script src="../assets/js/sidebar.js"></script></body></html>

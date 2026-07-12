@@ -1,49 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Roadmap · Clyth Documentation</title>
-  <meta name="description" content="Clyth roadmap">
-  <link rel="stylesheet" href="../assets/css/site.css">
-</head>
-<body>
-<header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="mecc.html">MECC</a></div></nav></header>
-<button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
-<main class="docs-shell"><aside class="sidebar" aria-label="Documentation navigation">
-<p class="sidebar-title">Clyth Docs</p>
-<details open data-sidebar-group="project"><summary>Project</summary>
-<a href="overview.html">Overview</a>
-<a href="getting-started.html">Getting Started</a>
-<a class="active" href="roadmap.html">Roadmap</a>
-</details>
-<details open data-sidebar-group="language"><summary>Language</summary>
-<a href="basics.html">Basics</a>
-<a href="types.html">Types</a>
-<a href="strings.html">Strings & Chars</a>
-<a href="functions.html">Functions</a>
-<a href="structs.html">Structs</a>
-<a href="collections.html">Collections</a>
-<a href="ownership.html">Ownership</a>
-<a href="mecc.html">MECC</a>
-</details>
-<details open data-sidebar-group="runtime"><summary>Runtime</summary>
-<a href="runtime.html">Runtime Architecture</a>
-<a href="abi.html">ABI Boundary</a>
-<a href="modules.html">Modules</a>
-</details>
-<details open data-sidebar-group="standard-library"><summary>Standard Library</summary>
-<a href="file-io.html">File I/O</a>
-<a href="json.html">JSON</a>
-<a href="hashing.html">Hashing</a>
-<a href="https.html">HTTPS Server</a>
-<a href="standard-library.html">Standard Library Index</a>
-</details>
-<details open data-sidebar-group="tooling"><summary>Tooling</summary>
-<a href="tooling.html">Tooling</a>
-<a href="distribution.html">Distribution</a>
-</details>
-</aside><article class="doc-page"><span class="breadcrumb">Clyth 0.5.0</span><h1>Roadmap</h1><p class="lead">0.5.0 establishes the runtime and ABI foundation. Later milestones simplify the compiler and move toward self-hosting.</p><h2>0.5.0 — Runtime Ecosystem Foundation</h2><p>Lock the current alpha language/runtime surface, prove the Clyth wrapper → ABI → native provider model, and release a clean musl/libc++-audited toolchain artifact.</p><h2>0.6.0 — Compiler Simplification and Bootstrap Path</h2><ul><li>replace ANTLR with a compact Pratt parser</li><li>create Clyth-owned AST and IR structures</li><li>move LLVM IR emission into a Clyth-side library/interface</li><li>reduce dependency on LLVM C++ APIs while keeping LLVM optimization/codegen available</li></ul><h2>Later</h2><ul><li>standalone x86_64 and aarch64 Linux musl targets</li><li>module build/distribution tooling</li><li>MECC ownership analysis</li><li>self-hosted compiler/runtime ecosystem</li></ul></article></main>
-<footer class="site-footer">Clyth documentation is written for the 0.5.0 Runtime Ecosystem Foundation release.</footer>
-<script src="../assets/js/sidebar.js"></script>
-</body></html>
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Roadmap · Clyth Documentation</title><meta content="Malleable alpha milestones and the Clyth 1.0 vision" name="description"/><link href="../assets/css/site.css" rel="stylesheet"/></head>
+<body><header class="site-header"><nav class="nav"><a class="brand" href="../index.html"><span class="brand-mark">C</span><span>Clyth</span></a><div class="nav-links"><a href="overview.html">Docs</a><a href="status.html">Status</a><a href="language.html">Language</a><a href="runtime.html">Runtime</a><a href="modules.html">Modules</a><a href="roadmap.html">Roadmap</a><a href="https://github.com/mali5820k/Cobralyth" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></nav></header><button class="mobile-docs-toggle" type="button">Docs</button><div class="sidebar-backdrop"></div>
+<main class="docs-shell"><aside aria-label="Documentation navigation" class="sidebar"><p class="sidebar-title">Clyth Docs</p><details data-sidebar-group="project" open=""><summary>Project</summary><a href="overview.html">Overview</a><a href="status.html">Release Status</a><a href="getting-started.html">Getting Started</a><a href="design-principles.html">Design Principles</a><a class="active" href="roadmap.html">Roadmap</a></details><details data-sidebar-group="language" open=""><summary>Language</summary><a href="basics.html">Basics</a><a href="types.html">Types</a><a href="strings.html">Strings &amp; Chars</a><a href="functions.html">Functions</a><a href="structs.html">Structs</a><a href="collections.html">Collections</a><a href="ownership.html">Ownership</a><a href="mecc.html">MECC</a></details><details data-sidebar-group="compiler" open=""><summary>Compiler</summary><a href="compiler-overview.html">Compiler Overview</a><a href="advanced.html">Language Design</a></details><details data-sidebar-group="runtime" open=""><summary>Runtime</summary><a href="runtime.html">Runtime Architecture</a><a href="abi.html">ABI Boundary</a><a href="modules.html">Modules</a></details><details data-sidebar-group="standard-library" open=""><summary>Standard Library</summary><a href="file-io.html">File I/O</a><a href="json.html">JSON</a><a href="hashing.html">Hashing</a><a href="https.html">HTTPS Server</a><a href="standard-library.html">Standard Library Index</a></details><details data-sidebar-group="tooling" open=""><summary>Tooling</summary><a href="tooling.html">Tooling</a><a href="distribution.html">Distribution</a></details></aside><article class="doc-content"><span class="breadcrumb">Project</span><h1>Roadmap to 1.0</h1><p class="lead">The roadmap communicates direction rather than immutable feature deadlines. Alpha milestones may change as the self-hosted compiler exposes new constraints and opportunities.</p><h2>Completed — 0.5.0 Alpha</h2><ul><li>released C++-hosted compiler and native build pipeline</li><li>24 passing regression programs</li><li>runtime modules and stable C ABI layering</li><li>collections, JSON, hashing, file I/O, and HTTPS/router support</li><li>documentation, release packaging, and GNU ABI audit tooling</li></ul><h2>In development — 0.6.0 Alpha</h2><ul><li>create the compiler written in Clyth</li><li>introduce a readable lexer and Pratt parser</li><li>represent syntax, semantic information, and IR using Clyth types</li><li>emit textual LLVM IR without linking the compiler against LLVM C++ libraries</li><li>build against a native musl toolchain and remove libc++ from the self-hosted compiler path</li><li>validate stage-one and stage-two rebuilds alongside the language regression suite</li></ul><h2>Planned alpha milestones — 0.7.0 and later</h2><p>Potential work includes richer string semantics—including replacing the 0.5.0 null-string default with a value-oriented representation while preserving deterministic initialization—compiler-managed temporaries, improved diagnostics, nullable flow analysis, optimizer passes, module/distribution refinement, additional native targets, and ownership analysis. Their exact version assignment may change.</p><h2>Vision — 1.0.0 Stable</h2><p>The stable target is a self-hosted systems language with a maintainable compiler, predictable native behavior, a coherent runtime/module ecosystem, stable language and ABI contracts, and MECC proper providing estate-oriented ownership analysis and cleanup.</p></article></main>
+<footer class="site-footer">Clyth 0.5.0 Alpha documentation.</footer><script src="../assets/js/sidebar.js"></script></body></html>
